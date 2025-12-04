@@ -2,29 +2,42 @@
 Program name: Script1.js
 Author: Bolla Srilakshmi Triveni
 Date created: 10-20-2025
-Date last edited: 11-02-2025
-Version: 2.7
-Description: Full JS validation and review for homework3.html:
-- Header date
+Date last edited: 11-??-2025
+Version: 3.0
+Description: Full JS validation and review for homework4.html:
+- Header date & live time
 - Live validation on input/blur
 - DOB strict 120y rule
 - ZIP strict 5 digits
 - SSN format & confirm
 - UserID/password rules
 - Validate button, only show real Submit when NO errors.
+- Cookies: remember first name
+- Local Storage: remember non-secure form data
+- Fetch API: load external health tips file
 */
 
-// ===== Header date/time (simple MM/DD/YYYY on the right) =====
+// ===== Header date/time (live MM/DD/YYYY HH:MM:SS) =====
 (function () {
   try {
-    const d = new Date();
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    const yyyy = d.getFullYear();
-    const l1 = document.getElementById("todayLine1");
-    const l2 = document.getElementById("todayLine2");
-    if (l1) l1.textContent = `Today's date: ${mm}/${dd}/${yyyy}`;
-    if (l2) l2.textContent = "";
+    function updateHeaderClock() {
+      const d = new Date();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      const hh = String(d.getHours()).padStart(2, '0');
+      const min = String(d.getMinutes()).padStart(2, '0');
+      const ss = String(d.getSeconds()).padStart(2, '0');
+
+      const l1 = document.getElementById("todayLine1");
+      const l2 = document.getElementById("todayLine2");
+
+      if (l1) l1.textContent = `Today's date: ${mm}/${dd}/${yyyy}`;
+      if (l2) l2.textContent = `Current time: ${hh}:${min}:${ss}`;
+    }
+
+    updateHeaderClock();
+    setInterval(updateHeaderClock, 1000);
   } catch (e) {}
 })();
 
@@ -43,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const email = document.getElementById("email"); const emailErr = document.getElementById("emailErr");
   const phone = document.getElementById("phone"); const phoneErr = document.getElementById("phoneErr");
-  const pain = document.getElementById("pain");
   const symptoms = document.getElementById("symptoms");
 
   // SSN elements (optional)
@@ -78,6 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const validateBtn  = document.getElementById("btnValidate");
   const reviewPane = document.getElementById("reviewPane");
   const reviewBody = document.getElementById("reviewBody");
+
+  // New elements for greeting / cookies / local storage / fetch
+  const welcomeMsg = document.getElementById("welcomeMsg");
+  const existingUserBox = document.getElementById("existingUserBox");
+  const rememberMe = document.getElementById("rememberMe");
 
   // ===== HTML Tag Prevention =====
   const preventHTMLTags = (input) => input.replace(/[<>]/g, '');
@@ -178,6 +195,140 @@ document.addEventListener("DOMContentLoaded", () => {
     const m = (raw || "").match(/\d{5}/);
     return m ? m[0] : "";
   };
+
+  // ===== Cookie helpers (remember user by first name) =====
+  const COOKIE_NAME = "scFirstName";
+
+  function setNameCookie(firstName) {
+    if (!firstName) return;
+    const days = 2; // ~48 hours
+    const d = new Date();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = `${COOKIE_NAME}=${encodeURIComponent(firstName)};expires=${d.toUTCString()};path=/`;
+  }
+
+  function getNameFromCookie() {
+    const nameEQ = COOKIE_NAME + "=";
+    const parts = document.cookie.split(";");
+    for (let c of parts) {
+      c = c.trim();
+      if (c.indexOf(nameEQ) === 0) {
+        return decodeURIComponent(c.substring(nameEQ.length));
+      }
+    }
+    return null;
+  }
+
+  function deleteNameCookie() {
+    document.cookie = `${COOKIE_NAME}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+  }
+
+  // ===== Local Storage helpers (non-secure form data) =====
+  const LS_KEY = "scPatientData";
+
+  function saveUserData() {
+    // Only save if Remember Me is on
+    if (rememberMe && !rememberMe.checked) return;
+
+    const data = {
+      fname: fname.value.trim(),
+      mi: mi.value.trim(),
+      lname: lname.value.trim(),
+      dob: dob.value.trim(),
+      email: email.value.trim(),
+      phone: phone.value.trim(),
+      address1: address1.value.trim(),
+      address2: address2.value.trim(),
+      city: city.value.trim(),
+      state: state.value,
+      zip: zip.value.trim(),
+      travelDate: travelDate.value.trim(),
+      moveInDate: moveInDate.value.trim(),
+      range: range.value,
+      salary: salary.value,
+      priceMin: priceMin.value,
+      priceMax: priceMax.value,
+      symptoms: symptoms ? symptoms.value.trim() : "",
+      otherNotes: (document.getElementById("otherNotes")?.value.trim() || ""),
+      housing: getRadio("housing"),
+      vaccinated: getRadio("vaccinated"),
+      pain: getRadio("pain"),
+      illnesses: getChecks("illness"),
+      userid: userid.value.trim().toLowerCase()
+      // DO NOT save ssn, medicalId, pw, pw2 (treat as secure)
+    };
+
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.warn("Unable to save to localStorage", e);
+    }
+  }
+
+  function loadUserData() {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      if (data.fname && !fname.value) fname.value = data.fname;
+      if (mi && data.mi) mi.value = data.mi;
+      if (lname && data.lname) lname.value = data.lname;
+      if (dob && data.dob) dob.value = data.dob;
+      if (email && data.email) email.value = data.email;
+      if (phone && data.phone) phone.value = data.phone;
+      if (address1 && data.address1) address1.value = data.address1;
+      if (address2 && data.address2) address2.value = data.address2;
+      if (city && data.city) city.value = data.city;
+      if (state && data.state) state.value = data.state;
+      if (zip && data.zip) zip.value = data.zip;
+      if (travelDate && data.travelDate) travelDate.value = data.travelDate;
+      if (moveInDate && data.moveInDate) moveInDate.value = data.moveInDate;
+      if (range && data.range) range.value = data.range;
+      if (salary && data.salary) salary.value = data.salary;
+      if (priceMin && data.priceMin) priceMin.value = data.priceMin;
+      if (priceMax && data.priceMax) priceMax.value = data.priceMax;
+      if (symptoms && data.symptoms) symptoms.value = data.symptoms;
+      const notesEl = document.getElementById("otherNotes");
+      if (notesEl && data.otherNotes) notesEl.value = data.otherNotes;
+      if (userid && data.userid) userid.value = data.userid;
+
+      // Radios
+      if (data.housing) {
+        const h = form.querySelector(`input[name="housing"][value="${data.housing}"]`);
+        if (h) h.checked = true;
+      }
+      if (data.vaccinated) {
+        const v = form.querySelector(`input[name="vaccinated"][value="${data.vaccinated}"]`);
+        if (v) v.checked = true;
+      }
+      if (data.pain) {
+        const p = form.querySelector(`input[name="pain"][value="${data.pain}"]`);
+        if (p) p.checked = true;
+      }
+
+      // Illness checkboxes
+      if (Array.isArray(data.illnesses)) {
+        form.querySelectorAll(`input[name="illness"]`).forEach(chk => {
+          chk.checked = data.illnesses.includes(chk.value);
+        });
+      }
+
+      // Update sliders display after loading
+      updateRange();
+      updateSalary();
+      updatePrice();
+    } catch (e) {
+      console.warn("Unable to load from localStorage", e);
+    }
+  }
+
+  function clearUserData() {
+    try {
+      localStorage.removeItem(LS_KEY);
+    } catch (e) {
+      console.warn("Unable to clear localStorage", e);
+    }
+  }
 
   // ===== SSN format + confirm (optional) =====
   const formatSSN = (digits) => {
@@ -318,9 +469,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!msg && p2 && p1 !== p2) msg = "Passwords do not match. Please re-enter the same password.";
 
     if (msg) {
+      pw.setCustomValidity(msg);
       pw2.setCustomValidity(msg);
       pwErr.textContent = msg;
     } else {
+      pw.setCustomValidity("");
       pw2.setCustomValidity("");
       pwErr.textContent = "";
     }
@@ -369,17 +522,34 @@ document.addEventListener("DOMContentLoaded", () => {
       lnameErr.textContent = "Only letters, apostrophes, and dashes allowed.";
       return false;
     }
-    if (value.length > 30) {
-      lname.setCustomValidity("Last Name must be 1-30 characters.");
-      lnameErr.textContent = "Must be 1-30 characters.";
-      return false;
-    }
     lname.setCustomValidity("");
     lnameErr.textContent = "";
     return true;
   };
   lname.addEventListener("input", validateLastName);
   lname.addEventListener("blur", validateLastName);
+
+  // (Optional) First name custom validation to match style of last name
+  const validateFirstName = () => {
+    const value = preventHTMLTags(fname.value.trim());
+    fname.value = value;
+    if (!value) {
+      fname.setCustomValidity("First Name is required.");
+      fnameErr.textContent = "First Name is required.";
+      return false;
+    }
+    const pattern = /^[A-Za-z'-]{1,30}$/;
+    if (!pattern.test(value)) {
+      fname.setCustomValidity("First Name: Use letters, apostrophes, and dashes only.");
+      fnameErr.textContent = "Only letters, apostrophes, and dashes allowed.";
+      return false;
+    }
+    fname.setCustomValidity("");
+    fnameErr.textContent = "";
+    return true;
+  };
+  fname.addEventListener("input", validateFirstName);
+  fname.addEventListener("blur", validateFirstName);
 
   // ===== DOB / Travel / Move-in =====
   function validateDOB() {
@@ -686,7 +856,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const prettyPhone = (raw) => {
     const d = (raw || "").replace(/\D/g, "");
     if (d.length !== 10) return raw || "(not provided)";
-    return `(${d.slice(0, 3)}) -${d.slice(3, 6)}-${d.slice(6)}`;
+    return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
   };
   const yn = (b) => (b ? "Y" : "N");
 
@@ -696,6 +866,7 @@ document.addEventListener("DOMContentLoaded", () => {
     validateZip();
     validateEmail();
     formatMI();
+    validateFirstName();
     validateLastName();
     checkPasswords();
     validateDOB();
@@ -876,12 +1047,94 @@ ${addrLines.join('\n')}
 
   validateBtn.addEventListener("click", buildReview);
 
+  // ===== On load: greet user based on cookie and load data if they exist =====
+  const savedName = getNameFromCookie();
+
+  if (savedName) {
+    if (welcomeMsg) {
+      welcomeMsg.textContent = `Welcome back, ${savedName}!`;
+    }
+    if (fname && !fname.value) {
+      fname.value = savedName;
+    }
+
+    // Show dynamic "Not Jake?" checkbox
+    if (existingUserBox) {
+      existingUserBox.innerHTML = `
+        <label>
+          <input type="checkbox" id="notMeCheckbox">
+          Not ${savedName}? Click here to start as a NEW USER.
+        </label>
+      `;
+      const notMeCheckbox = document.getElementById("notMeCheckbox");
+      if (notMeCheckbox) {
+        notMeCheckbox.addEventListener("change", function () {
+          if (this.checked) {
+            // Clear cookie + local storage + form
+            deleteNameCookie();
+            clearUserData();
+            form.reset();
+            if (welcomeMsg) {
+              welcomeMsg.textContent = "Welcome new user!";
+            }
+            existingUserBox.innerHTML = "";
+          }
+        });
+      }
+    }
+
+    // If it's the same user, read localStorage
+    loadUserData();
+  } else {
+    if (welcomeMsg) {
+      welcomeMsg.textContent = "Welcome new user!";
+    }
+    clearUserData();
+  }
+
+  // Auto-save non-secure data whenever something changes
+  form.addEventListener("change", saveUserData);
+
+  // Remember Me checkbox behavior
+  if (rememberMe) {
+    rememberMe.addEventListener("change", () => {
+      if (!rememberMe.checked) {
+        // User does NOT want to be remembered anymore
+        deleteNameCookie();
+        clearUserData();
+      } else {
+        // Turned back on: if we have a name, store cookie + data now
+        const n = fname.value.trim();
+        if (n) setNameCookie(n);
+        saveUserData();
+      }
+    });
+  }
+
+  // ===== Fetch API example: load external health tips =====
+  (async function loadHealthTips() {
+    const tipsBox = document.getElementById("healthTips");
+    if (!tipsBox) return;
+
+    try {
+      const response = await fetch("health-tips.html");
+      if (!response.ok) {
+        throw new Error("HTTP status " + response.status);
+      }
+      const html = await response.text();
+      tipsBox.innerHTML = html;
+    } catch (err) {
+      console.error("Error loading health tips", err);
+      tipsBox.textContent = "Unable to load health tips at this time.";
+    }
+  })();
+
   // ===== Submit guard =====
   form.addEventListener("submit", (e) => {
     userid.value = userid.value.trim().toLowerCase();
 
     const ok =
-      validateDOB() && validateTravelDate() && validateMoveInDate() &&
+      validateFirstName() && validateDOB() && validateTravelDate() && validateMoveInDate() &&
       validateAddress1() && validateAddress2() && validateCity() &&
       validateZip() && validateEmail() && validateUserID() &&
       validateLastName() && validateState() && validateMedicalId();
@@ -906,6 +1159,20 @@ ${addrLines.join('\n')}
     if (!form.checkValidity() || !ok) {
       e.preventDefault();
       form.reportValidity();
+      return;
     }
+
+    // At this point, the form is valid.
+    // Handle cookies + localStorage based on Remember Me.
+    if (rememberMe && rememberMe.checked) {
+      const n = fname.value.trim();
+      if (n) setNameCookie(n);
+      saveUserData();
+    } else {
+      deleteNameCookie();
+      clearUserData();
+    }
+
+    // allow normal submit to thankyou-1.html
   });
 });
