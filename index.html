@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <!-- 
-Program name: homework3.html
+Program name: homework4.html
 Author: Bolla Srilakshmi Triveni
 Date created: 10-20-2025
-Date last edited: 11-02-2025
-Version: 2.7
-Description: Registration form for a clinic patient portal (Homework 3).
+Date last edited: 11-??-2025
+Version: 3.0
+Description: Registration form for a clinic patient portal with
+- JS validation
+- Fetch API
+- iFrame
+- Content protection (sticky header + fixed footer)
+- Cookies + Local Storage
+- Time-based event (live clock)
 -->
 <html lang="en">
 <head>
@@ -28,6 +34,10 @@ Description: Registration form for a clinic patient portal (Homework 3).
           </td>
           <td align="center">
             <h2>SouthCentral Clinic</h2>
+            <!-- Greeting based on cookie -->
+            <div id="welcomeMsg" class="welcome-msg"></div>
+            <!-- Dynamic "Not Jake? Start as a new user" area -->
+            <div id="existingUserBox"></div>
           </td>
           <td valign="top" align="right" width="20%">
             <div id="todayBox">
@@ -50,13 +60,21 @@ Description: Registration form for a clinic patient portal (Homework 3).
         <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
         <tr class="row-names">
-          <td class="lbl"><label for="fname"><span class="req">*</span> First Name:</label></td>
+          <td class="lbl">
+            <label for="fname"><span class="req">*</span> First Name:</label>
+          </td>
           <td class="field">
             <input type="text" id="fname" name="fname" maxlength="30" required
                    placeholder="please enter your first name"
                    title="1–30 chars; letters, apostrophes, and dashes only."
                    pattern="^[A-Za-z'\-]{1,30}$" />
             <span class="form-error" id="fnameErr"></span>
+
+            <!-- Remember Me checkbox -->
+            <div class="remember-container">
+              <input type="checkbox" id="rememberMe" checked />
+              <label for="rememberMe">Remember me on this device</label>
+            </div>
           </td>
 
           <td class="lbl"><label for="mi">Middle Initial:</label></td>
@@ -124,7 +142,7 @@ Description: Registration form for a clinic patient portal (Homework 3).
 
         <tr>
           <td><label for="phone"><span class="req">*</span> Phone Number:</label></td>
-          <td colspan="12">
+          <td colspan="5">
             <input type="text" id="phone" name="phone" required
                    pattern="^[0-9]{3}-[0-9]{3}-[0-9]{4}$"
                    title="Phone must be in format 000-000-0000 (10 digits with dashes)"
@@ -137,7 +155,8 @@ Description: Registration form for a clinic patient portal (Homework 3).
           <td><label for="medicalId" title="Required medical ID number."><span class="req">*</span> Medical ID Number:</label></td>
           <td colspan="5">
             <input type="password" id="medicalId" name="medicalId" required
-                   placeholder="Enter your medical ID" title="Medical identification number (5–20 letters or numbers)"
+                   placeholder="Enter your medical ID"
+                   title="Medical identification number (5–20 letters or numbers)"
                    pattern="^[A-Za-z0-9]{5,20}$" />
             <span class="form-error" id="medicalIdErr"></span>
           </td>
@@ -162,7 +181,8 @@ Description: Registration form for a clinic patient portal (Homework 3).
           <td colspan="5">
             <input type="text" id="address2" name="address2" maxlength="30"
                    placeholder="Apt / Suite / Unit"
-                   title="Optional: if entered, must be 2–30 characters" pattern="^$|^.{2,30}$" />
+                   title="Optional: if entered, must be 2–30 characters"
+                   pattern="^$|^.{2,30}$" />
             <span class="form-error" id="addr2Err"></span>
           </td>
         </tr>
@@ -244,7 +264,9 @@ Description: Registration form for a clinic patient portal (Homework 3).
         </tr>
 
         <tr>
-          <td class="td-right"><label for="range" title="1=poor, 10=excellent.">How is your health? (1–10) (optional)</label></td>
+          <td class="td-right">
+            <label for="range" title="1=poor, 10=excellent.">How is your health? (1–10) (optional)</label>
+          </td>
           <td colspan="5">
             <input type="range" id="range" name="range" min="1" max="10" value="5"
                    title="Select your overall health rating: 1 (poor) to 10 (excellent)" />
@@ -386,10 +408,32 @@ Description: Registration form for a clinic patient portal (Homework 3).
           <td colspan="6" class="actions-row">
             <input type="reset" value="CLEAR AND START OVER" />
             <button type="button" id="btnValidate" class="btn-review">VALIDATE</button>
-            <!-- Real SUBMIT button is created only when there are NO errors -->
+            <!-- Real SUBMIT button is triggered only when there are NO errors -->
           </td>
         </tr>
       </table>
+
+      <!-- Extra Content: Fetch + iFrame -->
+      <section id="extraContent">
+        <h3>Health Tips (loaded with Fetch API)</h3>
+        <div id="healthTips" class="tips-box">
+          <!-- This content will be loaded from health-tips.html using Fetch -->
+          Loading health tips...
+        </div>
+
+        <h3>Helpful External Resource (iFrame example)</h3>
+        <div class="iframe-wrapper">
+          <iframe
+            id="eduFrame"
+            src="https://www.w3schools.com/html/default.asp"
+            title="HTML Tutorial (external resource)"
+            width="100%"
+            height="250"
+            style="border:1px solid #ccc;border-radius:8px;"
+          >
+          </iframe>
+        </div>
+      </section>
 
       <!-- Right-side review pane (same page) -->
       <div id="reviewPane" role="region" aria-live="polite" aria-labelledby="reviewTitle" hidden>
