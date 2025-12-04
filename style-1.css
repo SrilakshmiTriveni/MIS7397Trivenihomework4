@@ -1,0 +1,302 @@
+/*
+Program name: style-1.css
+Author: Bolla Srilakshmi Triveni
+Date created: 10-20-2025
+Last edited: 10-24-2025
+Version: 2.6 (No-wrap labels + buttons left + live price)
+Description: Styles for patient form – colors, fonts, layout, footer, and compact table spacing.
+*/
+
+/* ===== Base layout ===== */
+html, body { height:100%; margin:0; padding:0; }
+body{
+  display:flex; flex-direction:column; align-items:stretch;
+  min-height:100vh;
+  background:rgb(183,214,183);
+  color:#1f2623;
+  font-family:Arial, Helvetica, sans-serif;
+  line-height:1.4;
+}
+header, main, #page-footer { width:100%; }
+
+/* ===== Header ===== */
+header{ background-color:rgb(231,74,100); padding:10px 0; }
+header table{ width:100%; border-collapse:collapse; table-layout:fixed; }
+header td{ padding:8px; vertical-align:middle; }
+#logo{ width:70px; height:auto; display:block; }
+.image{ text-align:left; }
+h2{
+  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+  color:#111; text-align:center; margin:0; font-size:1.8em;
+}
+#todayBox{ margin:0; font-size:14px; text-align:right; color:#111; }
+
+/* ===== Main content ===== */
+main{ flex:1 0 auto; text-align:left; padding:20px 10px; }
+
+/* ===== Form table (panel) ===== */
+.form-table{
+  margin:0 auto;
+  border-collapse:separate;
+  border-spacing:10px 12px;
+  width:92%;
+  max-width:1000px;
+  background:#eef6ee;
+  border:2px solid rgba(0,0,0,0.15);
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+.form-table td{ vertical-align:middle; padding:6px; }
+
+/* First column labels don’t wrap */
+.form-table tr > td:first-child{
+  text-align:right;
+  width:230px;
+  font-weight:600;
+  color:#222;
+  white-space:nowrap;
+  word-break:keep-all;
+  overflow-wrap:normal;
+}
+.row-names td.lbl,
+.row-csz .lbl-tight,
+.form-table .lbl{
+  white-space:nowrap; word-break:keep-all; overflow-wrap:normal;
+}
+
+/* table heading */
+.form-table th{
+  background:rgb(231,74,100);
+  color:#fff;
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  padding:12px 16px;
+  border-radius:8px;
+}
+
+/* ===== Section tabs ===== */
+.section-tab{
+  display:inline-block;
+  background:rgb(231,74,100);
+  color:#fff;
+  font-weight:700;
+  padding:8px 16px;
+  border-radius:6px;
+  margin:18px 0 8px 0;
+  letter-spacing:.2px;
+  font-size:1.05em;
+  text-align:left;
+  float:left; clear:both;
+}
+.section-line{
+  height:2px; background:rgba(0,0,0,0.25);
+  margin:8px 0 16px 0; clear:both;
+}
+
+/* ===== Inputs ===== */
+.form-table input[type="text"],
+.form-table input[type="email"],
+.form-table input[type="password"],
+.form-table input[type="tel"],
+.form-table select,
+.form-table textarea{
+  width:220px; max-width:100%;
+  padding:8px 10px;
+  border:1px solid #888; border-radius:4px; font-size:14px; background:#fff;
+}
+.form-table input:focus,
+.form-table select:focus,
+.form-table textarea:focus{
+  outline:none; border-color:#3b82f6;
+}
+
+/* radios / checkboxes */
+.form-table input[type="radio"]{ width:auto; margin-right:4px; }
+.checkbox-group{
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:8px; margin:8px 0;
+}
+.checkbox-group label{
+  display:flex; align-items:center; gap:6px; white-space:nowrap;
+}
+
+/* errors & notes */
+.req{ color:#b00020; margin-right:4px; font-weight:700; }
+.form-error{
+  color:#b00020; font-size:12px; margin-left:6px;
+  display:block; margin-top:4px;
+}
+.form-note{ color:#0a58ca; font-size:12px; margin-left:6px; }
+.linklike{
+  background:none; border:none; color:#0a58ca;
+  text-decoration:underline; cursor:pointer;
+  padding:0 0 0 6px; font-size:12px;
+}
+
+/* city/state/zip compact */
+.row-csz .field-tight{ padding-left:2px; }
+#state{ width:170px; margin-left:-4px; }
+#zip{ width:12ch; margin-left:-4px; }
+#stateErr{
+  color:#b00020; font-size:12px; margin-left:6px;
+  display:block; margin-top:4px;
+}
+
+/* ===== Price display card ===== */
+.price-display{
+  background:#e9efe9;
+  padding:12px;
+  border-radius:8px;
+  margin-top:8px;
+  border:1px solid #cdd8cd;
+}
+.price-display-title{
+  font-weight:bold; color:#2d3748; margin-bottom:6px;
+}
+.price-display-value{
+  font-size:16px; color:#2d5f85; font-weight:bold; text-align:center;
+  padding:8px; background:#fff; border-radius:5px;
+  border:1px dashed #2d5f85;
+}
+
+/* hide the old inline text by sliders */
+#priceOut{ display:none; }
+
+/* ===== Money/Sliders ===== */
+.money{
+  font-weight:700; margin-left:8px;
+  color:#166534; font-size:14px;
+}
+.price-range-row{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.range-group{
+  display:flex; align-items:center; gap:6px;
+}
+.tiny{ font-size:12px; color:#333; font-weight:600; }
+input[type="range"]{
+  width:150px; height:6px; border-radius:3px;
+  background:#ddd; outline:none; cursor:pointer;
+}
+input[type="range"]::-webkit-slider-thumb{
+  appearance:none; width:16px; height:16px;
+  border-radius:50%; background:#3b82f6; cursor:pointer;
+}
+input[type="range"]::-moz-range-thumb{
+  width:16px; height:16px; border-radius:50%;
+  background:#3b82f6; cursor:pointer; border:none;
+}
+
+/* ===== Buttons row (LEFT inside table) ===== */
+.actions-row{
+  padding-top:20px;
+  text-align:left;
+  border-top:2px solid rgba(0,0,0,0.15);
+  margin-top:20px;
+  padding-left:40px;
+}
+.actions-row input[type="reset"],
+.actions-row .btn-review,
+.actions-row input[type="submit"]{
+  display:inline-block; margin:0 10px 0 0;
+  padding:12px 24px; font-size:15px; font-weight:600;
+  border-radius:6px; border:none; cursor:pointer; transition:.2s;
+}
+.actions-row input[type="reset"]{ background:#2563eb; color:#fff; }
+.actions-row .btn-review{ background:#6b7280; color:#fff; }
+.actions-row input[type="submit"]{ background:#166534; color:#fff; }
+.actions-row input[type="reset"]:hover,
+.actions-row .btn-review:hover,
+.actions-row input[type="submit"]:hover{ filter:brightness(.9); }
+
+/* ===== Review pane ===== */
+#reviewPane{
+  background:#ffffff;
+  border:1px solid rgba(0,0,0,0.15);
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  margin:10px auto 0;
+  max-width:1000px;
+  max-height:80vh;
+  overflow-y:auto;
+}
+#reviewPane h3{
+  margin:0 0 15px 0; text-align:center; color:#b00020;
+  font-size:1.3em; padding-bottom:10px; border-bottom:2px solid #eee;
+}
+
+/* ===== Footer ===== */
+#page-footer{
+  background:#2f2f2f; color:#fff;
+  padding:20px 0; text-align:center; margin-top:30px;
+}
+.footer-inner{
+  display:flex; align-items:center; justify-content:center;
+  gap:18px; flex-wrap:wrap; max-width:1200px;
+  margin:0 auto; padding:0 20px;
+}
+.footer-brand{ font-size:20px; font-weight:bold; }
+.footer-sep{ color:#c9c9c9; }
+.footer-address{ color:#fff; }
+.footer-link{ color:goldenrod; text-decoration:none; }
+.footer-link:hover{ text-decoration:underline; }
+.footer-btn{
+  background:#c7e6f1; color:#000; text-decoration:none;
+  padding:10px 22px; border-radius:12px;
+  font-weight:700; display:inline-block;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px){
+  .form-table{ width:95%; }
+  .form-table tr > td:first-child,
+  .row-names td.lbl,
+  .row-csz .lbl-tight,
+  .form-table .lbl{ white-space:normal; }
+  .actions-row{
+    text-align:center; padding-left:0;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .actions-row input[type="reset"],
+  .actions-row .btn-review,
+  .actions-row input[type="submit"]{
+    width:100%; margin:0;
+  }
+}
+
+/* ===== Review rows ===== */
+.rev-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  font-size: 14px;
+}
+.rev-key {
+  font-weight: 600;
+  min-width: 200px;
+  color: #000;
+}
+.rev-sep {
+  margin: 0 4px;
+  font-weight: 600;
+}
+.rev-val {
+  flex: 1 1 auto;
+  white-space: pre-line;
+  color: #000;
+}
+.rev-status {
+  font-weight: 700;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+.rev-status.ok {
+  color: #166534;
+}
+.rev-status.err {
+  color: #b00020;
+}
