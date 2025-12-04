@@ -8,45 +8,52 @@
   <link rel="stylesheet" href="style-1.css" />
 </head>
 <body>
-  <header>
-    <table>
-      <tr>
-        <td valign="top" align="left" width="20%">
-          <div class="image"><img id="logo" src="cliniclogo.png" alt="SouthCentral Clinic logo" /></div>
-        </td>
-        <td align="center"><h2>SouthCentral Clinic</h2></td>
-        <td valign="top" align="right" width="20%">
-          <div id="todayBox">
-            <span id="todayLine1"></span><br>
-            <span id="todayLine2"></span>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </header>
+  <div id="top">
+    <header>
+      <table>
+        <tr>
+          <td valign="top" align="left" width="20%">
+            <div class="image"><img id="logo" src="cliniclogo.png" alt="SouthCentral Clinic logo" /></div>
+          </td>
+          <td align="center">
+            <h2>SouthCentral Clinic</h2>
+            <div id="welcomeMsg" class="welcome-msg"></div>
+            <div id="existingUserBox"></div>
+          </td>
+          <td valign="top" align="right" width="20%">
+            <div id="todayBox">
+              <span id="todayLine1"></span><br>
+              <span id="todayLine2"></span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </header>
+  </div>
 
   <main style="text-align:center; padding: 60px 20px;">
     <div style="max-width: 600px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
       <h3 style="color: #166534; margin-bottom: 18px;">Thank you for your submission.</h3>
       <p>We will be contacting you shortly.</p>
-      <p><a href="homework3.html" class="footer-btn">Back to Registration Form</a></p>
+      <p style="margin-top:16px;">
+        <a href="homework4.html" class="footer-btn">Back to Registration Form</a>
+      </p>
     </div>
   </main>
 
-  <div id="bottom">
-    <div id="page-footer">
-      <div class="footer-inner">
-        <span class="footer-brand">SouthCentral Clinic</span>
-        <span class="footer-sep">|</span>
-        <a class="footer-btn" href="https://scrmc.com/" target="_blank" rel="noopener">CONTACT US</a>
-        <span class="footer-sep">|</span>
-        <a class="footer-link" href="https://facebook.com" target="_blank" rel="noopener">FB</a>
-        <span class="footer-sep">|</span>
-        <span class="footer-address">Address: 16360 Park Ten Pl, Houston, TX 77084</span>
-      </div>
+  <footer id="page-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">SouthCentral Clinic</span>
+      <span class="footer-sep">|</span>
+      <a class="footer-btn" href="https://scrmc.com/" target="_blank" rel="noopener">CONTACT US</a>
+      <span class="footer-sep">|</span>
+      <a class="footer-link" href="https://facebook.com" target="_blank" rel="noopener">FB</a>
+      <span class="footer-sep">|</span>
+      <span class="footer-address">Address: 16360 Park Ten Pl, Houston, TX 77084</span>
     </div>
-  </div>
+  </footer>
 
+  <!-- Script1.js still runs here, but exits early since there's no patientForm -->
   <script src="Script1.js"></script>
 </body>
 </html>
