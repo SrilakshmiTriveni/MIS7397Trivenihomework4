@@ -1,59 +1,27 @@
 <!DOCTYPE html>
-<!-- Simple landing page after successful submit -->
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SouthCentral Clinic – Thank You</title>
-  <link rel="stylesheet" href="style-1.css" />
+<title>Thank You!</title>
+<style>
+body{background:#cbdcbc;font-family:Arial;text-align:center;margin-top:150px;}
+#msg{
+    background:white;
+    padding:40px;
+    width:50%;
+    margin:auto;
+    border-radius:10px;
+    box-shadow:0 0 20px rgba(0,0,0,0.2);
+    font-size:22px;
+}
+a{color:#b23a42;font-weight:bold;}
+</style>
 </head>
 <body>
-  <div id="top">
-    <header>
-      <table>
-        <tr>
-          <td valign="top" align="left" width="20%">
-            <div class="image"><img id="logo" src="cliniclogo.png" alt="SouthCentral Clinic logo" /></div>
-          </td>
-          <td align="center">
-            <h2>SouthCentral Clinic</h2>
-            <div id="welcomeMsg" class="welcome-msg"></div>
-            <div id="existingUserBox"></div>
-          </td>
-          <td valign="top" align="right" width="20%">
-            <div id="todayBox">
-              <span id="todayLine1"></span><br>
-              <span id="todayLine2"></span>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </header>
-  </div>
 
-  <main style="text-align:center; padding: 60px 20px;">
-    <div style="max-width: 600px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-      <h3 style="color: #166534; margin-bottom: 18px;">Thank you for your submission.</h3>
-      <p>We will be contacting you shortly.</p>
-      <p style="margin-top:16px;">
-        <a href="homework4.html" class="footer-btn">Back to Registration Form</a>
-      </p>
-    </div>
-  </main>
+<div id="msg">
+    Your form is successfully submitted! <br><br>
+    <a href="index.html">← Fill again</a>
+</div>
 
-  <footer id="page-footer">
-    <div class="footer-inner">
-      <span class="footer-brand">SouthCentral Clinic</span>
-      <span class="footer-sep">|</span>
-      <a class="footer-btn" href="https://scrmc.com/" target="_blank" rel="noopener">CONTACT US</a>
-      <span class="footer-sep">|</span>
-      <a class="footer-link" href="https://facebook.com" target="_blank" rel="noopener">FB</a>
-      <span class="footer-sep">|</span>
-      <span class="footer-address">Address: 16360 Park Ten Pl, Houston, TX 77084</span>
-    </div>
-  </footer>
-
-  <!-- Script1.js still runs here, but exits early since there's no patientForm -->
-  <script src="Script1.js"></script>
 </body>
 </html>
