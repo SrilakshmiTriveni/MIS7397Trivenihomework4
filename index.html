@@ -15,7 +15,7 @@
 
     <span id="welcomeUser"></span>
 
-    <!-- NEW REQUIRED FEATURE -->
+    <!-- REQUIRED FEATURE -->
     <span id="resetUser"
           style="margin-left:15px; text-decoration:underline; cursor:pointer; font-size:13px; display:none;">
         (Not You? Reset)
@@ -29,108 +29,143 @@
 
     <div class="form-title">Patient Registration Form</div>
 
-<!-- ====================== FORM START ====================== -->
+<!-- ============================================================================================= -->
+<!-- FORM START -->
 <form id="patientForm">
 
 <!-- PERSONAL -->
 <div class="section">
 <h3>Personal Information</h3>
 
-<div class="row">
-    <label> * First Name: <input type="text" id="fname" required></label>
-    <label> Middle Initial: <input type="text" id="mname"></label>
-    <label> * Last Name: <input type="text" id="lname" required></label>
-</div>
+<label>* First Name: <input type="text" id="fname" required></label>
+<label>Middle Initial: <input type="text" id="mname"></label>
+<label>* Last Name: <input type="text" id="lname" required></label>
 
-<div class="row">
-    <label>* Date of Birth: <input type="text" id="dob" placeholder="MM/DD/YYYY" required></label>
-    <label>Social Security Number (optional): <input type="text" id="ssn"></label>
-</div>
+<label>* Date of Birth: <input type="text" id="dob" placeholder="MM/DD/YYYY" required></label>
+<label>Social Security Number (optional): <input type="text" id="ssn"></label>
 
 <label><input type="checkbox" id="rememberMe" checked> Remember me on this device</label>
 </div>
 
+<hr>
 
 <!-- CONTACT -->
 <div class="section">
 <h3>Contact Information</h3>
-
-<div class="row">
-    <label>* Email: <input type="email" id="email" required></label>
-    <label>* Phone Number: <input type="text" id="phone" placeholder="000-000-0000" required></label>
-    <label>* Medical ID Number: <input type="text" id="mid" required></label>
-</div>
+<label>* Email: <input type="email" id="email" required></label>
+<label>* Phone Number: <input type="text" id="phone" placeholder="000-000-0000" required></label>
+<label>* Medical ID Number: <input type="text" id="mid" required></label>
 </div>
 
+<hr>
 
 <!-- ADDRESS -->
 <div class="section">
 <h3>Address</h3>
-
-<div class="row">
-    <label>* Address Line 1: <input type="text" id="addr1" required></label>
-    <label>Address Line 2: <input type="text" id="addr2"></label>
-    <label>* City: <input type="text" id="city" required></label>
+<label>* Address Line 1: <input type="text" id="addr1" required></label>
+<label>Address Line 2: <input type="text" id="addr2"></label>
+<label>* City: <input type="text" id="city" required></label>
+<label>* State: <select id="state" required></select></label>
+<label>* Zip Code: <input type="text" id="zip" required></label>
 </div>
 
-<div class="row">
-    <label>* State: <select id="state" required></select></label>
-    <label>* Zip Code: <input type="text" id="zip" required></label>
-</div>
-</div>
-
+<hr>
 
 <!-- TRAVEL -->
 <div class="section">
 <h3>Travel & Move-In Information</h3>
-
-<div class="row">
-    <label>Travel Date: <input type="text" id="travel" placeholder="MM/DD/YYYY"></label>
-    <label>Move-In Date: <input type="text" id="move" placeholder="MM/DD/YYYY"></label>
-</div>
+<label>Travel Date: <input type="text" id="travel" placeholder="MM/DD/YYYY"></label>
+<label>Move-In Date: <input type="text" id="move" placeholder="MM/DD/YYYY"></label>
 </div>
 
+<hr>
 
 <!-- HEALTH -->
 <div class="section">
 <h3>Health Information</h3>
 
-<div class="row">
-    <label><input type="checkbox" class="ill" value="Chicken Pox"> Chicken Pox</label>
-    <label><input type="checkbox" class="ill" value="Mumps"> Mumps</label>
-    <label><input type="checkbox" class="ill" value="Measles"> Measles</label>
-    <label><input type="checkbox" class="ill" value="Covid-19"> Covid-19</label>
-    <label><input type="checkbox" class="ill" value="Heart Disease"> Heart Disease</label>
+<p>Past Illnesses (check all that apply):</p>
+<label><input type="checkbox" class="ill" value="Chicken Pox"> Chicken Pox</label>
+<label><input type="checkbox" class="ill" value="Measles"> Measles</label>
+<label><input type="checkbox" class="ill" value="Mumps"> Mumps</label>
+<label><input type="checkbox" class="ill" value="Heart Disease"> Heart Disease</label>
+<label><input type="checkbox" class="ill" value="Covid-19"> Covid-19</label>
+<label><input type="checkbox" class="ill" value="Diabetic"> Diabetic</label>
+
+<br>
+
+<label>How is your health? (1-10) — Current: <span id="healthValue">5</span></label>
+<input type="range" id="health" min="1" max="10" value="5">
+
+<p>Level of Pain:</p>
+<label><input type="radio" name="pain" value="Mild"> Mild</label>
+<label><input type="radio" name="pain" value="Moderate"> Moderate</label>
+<label><input type="radio" name="pain" value="Severe"> Severe</label>
+
+<p>Have you been vaccinated?</p>
+<label><input type="radio" name="vax" value="Yes"> Yes</label>
+<label><input type="radio" name="vax" value="No"> No</label>
+<label><input type="radio" name="vax" value="Unsure"> Unsure</label>
 </div>
 
-<label>How is your health? (1-10)</label>
-<div class="row block-full" style="align-items:center;">
-    <input type="range" id="health" min="1" max="10" value="5">
-    <span id="healthValue" style="margin-left:10px;">5</span>
-</div>
+<hr>
+
+<!-- OTHER INFORMATION -->
+<div class="section">
+<h3>Other Information</h3>
+
+<p>* Housing:</p>
+<label><input type="radio" name="house" value="Own"> Own</label>
+<label><input type="radio" name="house" value="Rent"> Rent</label>
+<label><input type="radio" name="house" value="Unsure"> Unsure</label>
+
+<br><br>
+
+<label>$ Salary (year): <span id="salaryValue">$60,000</span></label>
+<input type="range" id="salary" min="20000" max="200000" value="60000">
+
+<br>
+
+<label>Home Price Range:</label>
+<label>Min <input type="range" id="minPrice" min="100000" max="500000" value="200000"></label>
+<label>Max <input type="range" id="maxPrice" min="300000" max="900000" value="600000"></label>
+
+<label>Price Range Summary:<input type="text" id="priceRange" readonly></label>
+
+<br>
+
+<label>Described Symptoms (optional):</label>
+<textarea id="symptoms"></textarea>
+
+<label>Other notes (optional):</label>
+<textarea id="notes"></textarea>
 </div>
 
+<hr>
 
 <!-- ACCOUNT -->
 <div class="section">
-<h3>Account Creation</h3>
+<h3>Account Creation Details</h3>
 
-<div class="row">
-    <label>Create Password*: <input type="password" id="pass" required></label>
-    <label>Re-enter Password*: <input type="password" id="repass" required></label>
-</div>
+<label>* Desired User ID: <input type="text" id="uid"></label>
+<label>* Password: <input type="password" id="pass" required></label>
+<label>* Re-enter Password: <input type="password" id="repass" required></label>
 </div>
 
 <button id="submitBtn">SUBMIT FORM</button>
-</form>
 
-<!-- ===== HEALTH TIPS FETCH ===== -->
+</form>
+<!-- FORM END -->
+
+<br><br>
+
+<!-- FETCH API -->
 <div id="tips-box">
-    <h3>Health Tips (Loaded Using Fetch API)</h3>
+    <h3>Health Tips (Loaded via Fetch API)</h3>
     <ul id="tipsList"></ul>
 </div>
 
-<!-- ===== IFRAME ===== -->
+<!-- IFRAME -->
 <div id="iframeBlock">
     <h3>Helpful Medical Resource</h3>
     <iframe src="https://www.cdc.gov" loading="lazy"></iframe>
