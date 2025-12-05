@@ -12,104 +12,131 @@
 <header id="header-bar">
     <img src="cliniclogo.png" id="logo"/>
     <h2>SouthCentral Clinic</h2>
+
     <span id="welcomeUser"></span>
+
+    <!-- NEW REQUIRED FEATURE -->
+    <span id="resetUser"
+          style="margin-left:15px; text-decoration:underline; cursor:pointer; font-size:13px; display:none;">
+        (Not You? Reset)
+    </span>
+
     <span id="datetime"></span>
 </header>
+
 
 <div class="page-container">
 
     <div class="form-title">Patient Registration Form</div>
 
-<!-- ======================= FORM START ======================= -->
+<!-- ====================== FORM START ====================== -->
 <form id="patientForm">
 
-<!-- ========== Personal Information ========= -->
+<!-- PERSONAL -->
 <div class="section">
-    <h3>Personal Information</h3>
+<h3>Personal Information</h3>
 
-    <label>First Name*: <input type="text" id="fname" placeholder="please enter your first name"></label>
-    <label>Middle Initial: <input type="text" id="mname"></label>
-    <label>Last Name*: <input type="text" id="lname" placeholder="please enter your last name"></label><br>
+<div class="row">
+    <label> * First Name: <input type="text" id="fname" required></label>
+    <label> Middle Initial: <input type="text" id="mname"></label>
+    <label> * Last Name: <input type="text" id="lname" required></label>
+</div>
 
-    <label>Date of Birth*: <input type="text" id="dob" placeholder="MM/DD/YYYY"></label>
+<div class="row">
+    <label>* Date of Birth: <input type="text" id="dob" placeholder="MM/DD/YYYY" required></label>
     <label>Social Security Number (optional): <input type="text" id="ssn"></label>
-
-    <label><input type="checkbox" id="rememberMe" checked> Remember me on this device</label>
 </div>
 
-<!-- ========== Contact Information ========== -->
-<div class="section">
-    <h3>Contact Information</h3>
-
-    <label>Email*: <input type="email" id="email" placeholder="name@email.com"></label>
-    <label>Phone Number*: <input type="text" id="phone" placeholder="000-000-0000"></label>
-    <label>Medical ID Number*: <input type="text" id="mid" placeholder="Enter your medical ID"></label>
+<label><input type="checkbox" id="rememberMe" checked> Remember me on this device</label>
 </div>
 
-<!-- ========== Address ========== -->
+
+<!-- CONTACT -->
 <div class="section">
-    <h3>Address</h3>
+<h3>Contact Information</h3>
 
-    <label>Address Line 1*: <input type="text" id="addr1"></label>
-    <label>Address Line 2: <input type="text" id="addr2" placeholder="Apt / Suite / Unit"></label>
-    <label>City*: <input type="text" id="city"></label>
-
-    <label>State*: 
-        <select id="state"></select>   <!-- loaded via Fetch API -->
-    </label>
-    <label>Zip Code*: <input type="text" id="zip"></label>
+<div class="row">
+    <label>* Email: <input type="email" id="email" required></label>
+    <label>* Phone Number: <input type="text" id="phone" placeholder="000-000-0000" required></label>
+    <label>* Medical ID Number: <input type="text" id="mid" required></label>
+</div>
 </div>
 
-<!-- ========== Travel Info ========== -->
-<div class="section">
-    <h3>Travel & Move-In Information</h3>
 
+<!-- ADDRESS -->
+<div class="section">
+<h3>Address</h3>
+
+<div class="row">
+    <label>* Address Line 1: <input type="text" id="addr1" required></label>
+    <label>Address Line 2: <input type="text" id="addr2"></label>
+    <label>* City: <input type="text" id="city" required></label>
+</div>
+
+<div class="row">
+    <label>* State: <select id="state" required></select></label>
+    <label>* Zip Code: <input type="text" id="zip" required></label>
+</div>
+</div>
+
+
+<!-- TRAVEL -->
+<div class="section">
+<h3>Travel & Move-In Information</h3>
+
+<div class="row">
     <label>Travel Date: <input type="text" id="travel" placeholder="MM/DD/YYYY"></label>
-    <label>Move-In Date: <input type="text" id="move"></label>
+    <label>Move-In Date: <input type="text" id="move" placeholder="MM/DD/YYYY"></label>
+</div>
 </div>
 
-<!-- ========== Health Info ========== -->
+
+<!-- HEALTH -->
 <div class="section">
-    <h3>Health Information</h3>
+<h3>Health Information</h3>
 
-    <p>Past Illnesses (check all that apply):</p>
-    <label><input type="checkbox" value="ChickenPox" class="ill"> Chicken Pox</label>
-    <label><input type="checkbox" value="Mumps" class="ill"> Mumps</label>
-    <label><input type="checkbox" value="Measles" class="ill"> Measles</label>
-    <label><input type="checkbox" value="HeartDisease" class="ill"> Heart Disease</label>
-    <label><input type="checkbox" value="Covid19" class="ill"> Covid-19</label><br><br>
+<div class="row">
+    <label><input type="checkbox" class="ill" value="Chicken Pox"> Chicken Pox</label>
+    <label><input type="checkbox" class="ill" value="Mumps"> Mumps</label>
+    <label><input type="checkbox" class="ill" value="Measles"> Measles</label>
+    <label><input type="checkbox" class="ill" value="Covid-19"> Covid-19</label>
+    <label><input type="checkbox" class="ill" value="Heart Disease"> Heart Disease</label>
+</div>
 
-    <p>How is your health? (1-10)</p>
+<label>How is your health? (1-10)</label>
+<div class="row block-full" style="align-items:center;">
     <input type="range" id="health" min="1" max="10" value="5">
-    <span id="healthValue">5</span>
+    <span id="healthValue" style="margin-left:10px;">5</span>
+</div>
 </div>
 
-<!-- ========== Account Info ========== -->
+
+<!-- ACCOUNT -->
 <div class="section">
-    <h3>Account Creation</h3>
+<h3>Account Creation</h3>
 
-    <label>Create Password*: <input type="password" id="pass"></label>
-    <label>Re-enter Password*: <input type="password" id="repass"></label>
+<div class="row">
+    <label>Create Password*: <input type="password" id="pass" required></label>
+    <label>Re-enter Password*: <input type="password" id="repass" required></label>
+</div>
 </div>
 
-<!-- ================= SUBMIT BUTTON ================== -->
-<button type="submit" id="submitBtn">SUBMIT FORM</button>
-
+<button id="submitBtn">SUBMIT FORM</button>
 </form>
 
-<!-- ========== HEALTH TIPS (FETCH API) ========== -->
+<!-- ===== HEALTH TIPS FETCH ===== -->
 <div id="tips-box">
-    <h3>Health Tips (loaded from external file using Fetch API)</h3>
+    <h3>Health Tips (Loaded Using Fetch API)</h3>
     <ul id="tipsList"></ul>
 </div>
 
-<!-- ========== iFRAME DISPLAY ========== -->
+<!-- ===== IFRAME ===== -->
 <div id="iframeBlock">
-    <h3>Helpful Medical Resource (CDC.gov)</h3>
+    <h3>Helpful Medical Resource</h3>
     <iframe src="https://www.cdc.gov" loading="lazy"></iframe>
 </div>
 
-</div> <!-- end container -->
+</div>
 
 <footer id="footer-bar">SouthCentral Clinic ©2025 | CONTACT US</footer>
 </body>
