@@ -1,24 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Thank You!</title>
-<style>
-body{background:#cbdcbc;font-family:Arial;text-align:center;margin-top:160px;}
-#msg{
-    background:white;padding:45px;width:50%;
-    margin:auto;border-radius:10px;
-    box-shadow:0 0 20px rgba(0,0,0,.2);
-    font-size:22px;
-}
-a{color:#b23a42;font-weight:bold;}
-</style>
+  <meta charset="utf-8" />
+  <title>SouthCentral Clinic – Thank You</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style-1.css" />
 </head>
 <body>
+  <div id="top">
+    <header>
+      <table>
+        <tr>
+          <td valign="top" align="left" width="20%">
+            <div class="image">
+              <img id="logo" src="cliniclogo.png" alt="SouthCentral Clinic logo" />
+            </div>
+          </td>
+          <td align="center">
+            <h2>SouthCentral Clinic</h2>
+            <div id="welcomeBox">
+              <span id="greetingText">Thank you for registering!</span>
+            </div>
+          </td>
+          <td valign="top" align="right" width="20%">
+            <div id="todayBox">
+              <span id="todayLine1"></span><br />
+              <span id="todayLine2"></span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </header>
+  </div>
 
-<div id="msg">
-    Your form has been submitted successfully!<br><br>
-    <a href="index.html">← Submit Another</a>
-</div>
+  <main>
+    <section class="thankyou-panel">
+      <h3 id="thanksHeading">Registration Complete</h3>
+      <p id="thanksMessage">
+        Your information has been submitted successfully.
+      </p>
+      <p>
+        You may close this page, or
+        <a href="homework3.html">return to the registration form</a>.
+      </p>
+    </section>
+  </main>
 
+  <footer id="page-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">SouthCentral Clinic</span>
+      <span class="footer-sep">|</span>
+      <a class="footer-btn" href="https://scrmc.com/" target="_blank" rel="noopener">CONTACT US</a>
+      <span class="footer-sep">|</span>
+      <a class="footer-link" href="https://facebook.com" target="_blank" rel="noopener">FB</a>
+      <span class="footer-sep">|</span>
+      <span class="footer-address">Address: 16360 Park Ten Pl, Houston, TX 77084</span>
+    </div>
+  </footer>
+
+  <script>
+    // small copy of header clock + greeting from cookie/localStorage
+    (function () {
+      function pad2(n) { return String(n).padStart(2, "0"); }
+      const l1 = document.getElementById("todayLine1");
+      const l2 = document.getElementById("todayLine2");
+      function updateClock() {
+        const d = new Date();
+        const mm = pad2(d.getMonth() + 1);
+        const dd = pad2(d.getDate());
+        const yyyy = d.getFullYear();
+        let hh = d.getHours();
+        const mins = pad2(d.getMinutes());
+        const secs = pad2(d.getSeconds());
+        const ampm = hh >= 12 ? "PM" : "AM";
+        hh = hh % 12;
+        if (hh === 0) hh = 12;
+        if (l1) l1.textContent = `Today: ${mm}/${dd}/${yyyy}`;
+        if (l2) l2.textContent = `Time: ${pad2(hh)}:${mins}:${secs} ${ampm}`;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+    })();
+
+    function getCookie(name) {
+      const prefix = name + "=";
+      return document.cookie
+        .split(";")
+        .map(c => c.trim())
+        .filter(c => c.startsWith(prefix))
+        .map(c => decodeURIComponent(c.substring(prefix.length)))[0] || "";
+    }
+
+    (function () {
+      const heading = document.getElementById("thanksHeading");
+      const msg = document.getElementById("thanksMessage");
+      const greetingText = document.getElementById("greetingText");
+
+      let name = getCookie("sccUserName");
+      try {
+        const raw = localStorage.getItem("sccFormData");
+        if (!name && raw) {
+          const data = JSON.parse(raw);
+          if (data && data.displayName) name = data.displayName;
+        }
+      } catch (e) {}
+
+      if (name) {
+        if (heading) heading.textContent = `Thank you, ${name}!`;
+        if (msg) msg.textContent = "Your patient portal account has been created successfully.";
+        if (greetingText) greetingText.textContent = `Thank you for registering, ${name}!`;
+      }
+    })();
+  </script>
 </body>
 </html>
