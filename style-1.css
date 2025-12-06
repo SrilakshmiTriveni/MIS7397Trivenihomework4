@@ -95,13 +95,7 @@ main {
   width: 60px;
   text-align: center;
 }
-/* Put First / Middle / Last on the same line cleanly */
-.row-names {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns */
-    gap: 25px;  /* adjust spacing if needed */
-    width: 100%;
-}
+
 /* Section titles */
 .section-tab {
   background-color: #e0f0ff;
