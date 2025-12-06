@@ -1,298 +1,373 @@
-/* ==========================================================
-   GLOBAL PAGE LAYOUT
-========================================================== */
-#top { position: sticky; top: 0; z-index: 1000; }
-#page-footer { position: fixed; bottom: 0; left: 0; width: 100%; z-index: 900; }
-body { padding-bottom: 80px; }
-
-body{
-  height:100%; margin:0; padding:0;
-  display:flex; flex-direction:column; align-items:stretch;
-  min-height:100vh;
-  background:rgb(183,214,183);
-  color:#1f2623;
-  font-family:Arial, Helvetica, sans-serif;
-  line-height:1.4;
+/* Basic page layout */
+* {
+  box-sizing: border-box;
 }
 
-header, main, #page-footer { width:100%; }
-
-/* ==========================================================
-   HEADER
-========================================================== */
-header{ background-color:rgb(231,74,100); padding:10px 0; }
-header table{ width:100%; table-layout:fixed; border-collapse:collapse; }
-header td{ padding:8px; vertical-align:middle; }
-#logo{ width:70px; display:block; }
-
-header h2{
-  margin:0; font-size:26px; color:#111; text-align:center;
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f8fc;
+  color: #222;
 }
 
-#todayBox{ font-size:12px; text-align:right; font-weight:bold; }
-
-/* ==========================================================
-   MAIN + FORM CARD
-========================================================== */
-main{ flex:1; padding:20px 0 40px 0; }
-
-#page-wrap{ width:92%; max-width:1024px; margin:auto; }
-
-#formTitleBar{
-  background:rgb(231,74,100);
-  color:#fff; text-align:center; font-size:17px;
-  font-weight:900; padding:12px 0; border-radius:12px 12px 0 0;
+/* ===== Header / top content-protection ===== */
+#top {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #003865;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
 }
 
-#formCard{
-  background:#f7fbf5; border-radius:0 0 12px 12px;
-  box-shadow:0 0 10px rgba(0,0,0,.3);
-  padding:20px;
+#top header table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-/* ==========================================================
-   MAKE ALL LABELS + SECTION HEADINGS BOLD, SINGLE LINE
-========================================================== */
-label,
+#logo {
+  max-height: 70px;
+  margin: 4px 10px;
+}
+
+#top h2 {
+  margin: 10px 0 4px;
+  color: #fff;
+}
+
+#welcomeBox {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.not-you {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 0.8rem;
+  color: #ffe4a0;
+}
+
+.not-you input {
+  margin-right: 3px;
+}
+
+#todayBox {
+  font-size: 0.8rem;
+  text-align: right;
+  padding: 8px 10px 4px;
+}
+
+/* Ensure main content not hidden by sticky header & fixed footer */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 110px 10px 80px; /* top for header, bottom for footer */
+}
+
+/* ===== Form table ===== */
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-table th {
+  background-color: #005b96;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 8px;
+}
+
+.form-table td {
+  padding: 6px 8px;
+  vertical-align: top;
+}
+
+/* Section titles */
+.section-tab {
+  background-color: #e0f0ff;
+  font-weight: bold;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+.section-line {
+  border-bottom: 2px solid #c4d8f5;
+  margin: 4px 0 8px;
+}
+
+/* Labels & fields */
 .lbl,
-.form-table td label {
-  font-weight:600 !important;
-  font-size:15px;
-  color:#000;
-  white-space: nowrap;        /* keep ALL field names on one line */
-  display:inline-block;
+.td-right {
+  text-align: right;
+  white-space: nowrap;
+  font-size: 0.9rem;
 }
 
-/* make the first (label) column wide enough so labels don't wrap */
-.form-table td:first-child {
-  width:190px;               /* tweak 180–220 if you need more room */
+.field,
+.field-mi {
+  width: 25%;
 }
 
-/* SECTION TABS (Personal Information, Contact, Address...) */
-.section-tab{
-  background:rgb(231,74,100);
-  padding:7px 16px; color:#fff;
-  font-weight:900 !important;
-  font-size:13px; border-radius:6px;
+.field input,
+.field-mi input {
+  width: 100%;
 }
 
-/* Section headers */
-h2, h3, h4, .sectionTitle {
-  font-weight:600 !important;
-  font-size:19px;
-  color:#166534;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+  font-size: 0.9rem;
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #bbb;
 }
 
-/* line under headings */
-.section-line{
-  height:2px; background:#0003;
-  margin-top:6px; margin-bottom:14px;
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #005b96;
+  box-shadow: 0 0 3px rgba(0,91,150,0.4);
 }
 
-/* ==========================================================
-   FORM TABLE LAYOUT
-========================================================== */
-.form-table{
-  width:92%; max-width:1000px; margin:auto;
-  border-spacing:10px 14px; padding:16px;
-  background:#eef6ee; border-radius:10px;
-  border:2px solid rgba(0,0,0,.15);
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
+/* Errors */
+.form-error {
+  display: block;
+  font-size: 0.75rem;
+  color: #b00020;
+  margin-top: 2px;
 }
 
-.form-table td{
-  padding:6px;
-  vertical-align:middle;
+.form-note {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #004d40;
+  margin-left: 8px;
 }
 
-/* ==========================================================
-   INPUTS
-========================================================== */
-input[type="text"], input[type="email"], input[type="password"],
-input[type="tel"], select, textarea{
-  width:220px; max-width:100%;
-  padding:8px 10px; border:1px solid #777;
-  border-radius:4px; font-size:14px; background:#fff;
-  font-weight:600;
+/* Checkbox / radio groups */
+.checkbox-group label {
+  display: inline-block;
+  margin-right: 12px;
 }
 
-input:focus, select:focus, textarea:focus{
-  border-color:#256916;
-  box-shadow:0 0 3px rgba(0,80,20,.7);
-  outline:none;
+.price-range-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* error highlight */
-.input-error{
-  border-color:#d32f2f !important;
-  background-color:#ffebee;
+.range-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.form-error{
-  color:#b00020;
-  font-size:12px;
-  margin-left:6px;
-  display:block;
-  margin-top:4px;
+.range-group .tiny {
+  font-size: 0.75rem;
+  color: #555;
 }
 
-/* ==========================================================
-   FIELD WIDTHS
-========================================================== */
-#fname,#lname{ width:200px; }
-#mi{ width:50px; text-align:center; font-weight:bold; }
-#dob,#travelDate,#moveInDate{ width:140px; }
-#ssn{ width:130px; }
-#email{ width:230px; }
-#phone{ width:150px; }
-#medicalId{ width:200px; }
-#address1,#address2{ width:260px; }
-#city{ width:180px; }
-#state{ width:140px; }
-#zip{ width:90px; font-weight:bold; }
-#userid,#pw,#pw2{ width:180px; }
-textarea{ font-weight:bold; }
-
-/* ==========================================================
-   SLIDERS + DISPLAY
-========================================================== */
-input[type="range"]{ width:160px; }
-.money{ font-weight:900; }
-
-/* ==========================================================
-   BUTTONS
-========================================================== */
-.btn-review,
-input[type="reset"],
-.btn-submit-final{
-  padding:7px 18px;
-  border-radius:4px;
-  font-size:14px;
-  font-weight:900;
-  cursor:pointer;
+.money {
+  font-weight: bold;
+  margin-left: 6px;
 }
 
-.btn-review{
-  background:rgb(231,74,100);
-  color:#fff;
-  border:1px solid #7d2b30;
-}
-.btn-review:hover{ background:#b33243; }
-
-input[type="reset"]{
-  background:#eee;
-  border:1px solid #444;
-}
-input[type="reset"]:hover{ background:#ddd; }
-
-.btn-submit-final{
-  background:#2e7d32;
-  border:1px solid #1e5e22;
-  color:#fff;
-}
-.btn-submit-final:hover{ background:#1f5525; }
-
-/* center the action buttons row */
-.actions-row{
-  text-align:center;
-  padding-top:12px;
+/* Price display box */
+.price-display {
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  padding: 4px 6px;
+  background-color: #fafafa;
 }
 
-/* ==========================================================
-   IFRAMES + COOKIE GREETING
-========================================================== */
-#welcomeBox{
-  font-size:1rem;
-  font-weight:600;
-  color:#000;
+.price-display-title {
+  font-size: 0.85rem;
+  color: #555;
 }
 
-#infoFrameSection{
-  width:92%;
-  max-width:1000px;
-  margin:25px auto 80px;
-  background:#fff;
-  border-radius:10px;
-  padding:18px;
-  border:1px solid #ccc;
-  box-shadow:0 3px 8px #0002;
+.price-display-value {
+  font-weight: bold;
 }
 
-#healthFrame{
-  width:100%;
-  min-height:300px;
-  border-radius:6px;
-  background:#f9fafb;
-  border:2px solid #aaa;
+/* Buttons */
+.actions-row {
+  text-align: center;
+  padding: 10px 8px 12px;
 }
 
-/* ==========================================================
-   DATA GRID (professor-style)
-========================================================== */
-#dataGridSection{
-  width:100%;
-  background:#2f6b2f;
-  border-top:4px solid #e74a64;
-  padding:8px 0 16px 0;
-  margin-top:16px;
+button,
+input[type="reset"] {
+  margin: 4px 4px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 
-#dataGrid{
-  width:92%;
-  max-width:1000px;
-  margin:0 auto;
-  border-collapse:collapse;
-  background:#e3f3df;
-  border:3px solid #1e4d1e;
+.btn-review {
+  background-color: #e0e0e0;
+}
+
+.btn-submit-final {
+  background-color: #00793c;
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 3px 6px;
+  font-size: 0.8rem;
+}
+
+.btn-sm.alt {
+  background-color: #ffe0e0;
+}
+
+.linklike {
+  background: none;
+  border: none;
+  color: #005b96;
+  text-decoration: underline;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+/* Remember me */
+.remember-me-label {
+  font-size: 0.85rem;
+}
+
+/* Review pane on right for wider screens */
+#reviewPane {
+  margin-top: 16px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #cdd9f0;
+  background-color: #f8fbff;
+}
+
+#reviewPane h3 {
+  margin-top: 0;
+}
+
+/* Data grid */
+#dataGridSection {
+  margin-top: 20px;
+}
+
+#dataGrid {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 #dataGrid th,
-#dataGrid td{
-  border:1px solid #1e4d1e;
-  padding:4px 6px;
-  font-size:13px;
+#dataGrid td {
+  border: 1px solid #cdd9f0;
+  padding: 4px 6px;
+  font-size: 0.85rem;
 }
 
-#dataGrid th{
-  background:#1e4d1e;
-  color:#fff;
-  text-align:left;
+#dataGrid th {
+  background-color: #e7f0ff;
 }
 
-/* ==========================================================
-   FOOTER
-========================================================== */
-#page-footer{ bottom:0; position:fixed; }
-footer{
-  background:rgb(183,214,183);
-  padding:10px;
-  border-top:1px solid #0005;
-  font-size:12px;
-  font-weight:bold;
+/* iFrame section */
+#infoFrameSection {
+  margin-top: 24px;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  padding: 10px 12px;
 }
 
-.footer-inner{
-  width:92%;
-  max-width:1024px;
-  margin:0 auto;
-  text-align:center;
+#infoFrameSection h3 {
+  margin-top: 0;
 }
 
-.footer-brand{ font-weight:bold; margin-right:6px; }
-.footer-sep{ margin:0 4px; }
-.footer-btn{
-  padding:4px 10px;
-  background:#d4545e;
-  color:#fff;
-  text-decoration:none;
-  border-radius:4px;
-  font-size:11px;
+/* ===== Fixed footer ===== */
+#page-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #003865;
+  color: #fff;
+  font-size: 0.8rem;
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.3);
+  z-index: 1000;
 }
-.footer-btn:hover{ background:#b33243; }
-.footer-link{
-  color:#0645ad;
-  text-decoration:none;
-  font-size:11px;
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
 }
-.footer-link:hover{ text-decoration:underline; }
-.footer-address{ margin-left:6px; }
+
+.footer-brand {
+  font-weight: bold;
+}
+
+.footer-sep {
+  opacity: 0.7;
+}
+
+.footer-btn,
+.footer-link {
+  color: #ffeb3b;
+  text-decoration: none;
+}
+
+.footer-btn:hover,
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer-address {
+  opacity: 0.9;
+}
+
+/* Responsive tweaks */
+@media (min-width: 960px) {
+  #patientForm {
+    display: grid;
+    grid-template-columns: 2.2fr 1.1fr;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .form-table {
+    margin: 0;
+  }
+
+  #reviewPane {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .lbl,
+  .td-right {
+    text-align: left;
+  }
+
+  main {
+    padding-top: 95px;
+    padding-bottom: 90px;
+  }
+}
