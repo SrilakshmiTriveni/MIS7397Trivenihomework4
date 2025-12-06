@@ -53,10 +53,19 @@ main{ flex:1; padding:20px 0 40px 0; }
 /* ==========================================================
    MAKE ALL LABELS + SECTION HEADINGS BOLD
 ========================================================== */
-label, .lbl, .form-table td label {
+label,
+.lbl,
+.form-table td label {
   font-weight:600 !important;
   font-size:15px;
   color:#000;
+  white-space: nowrap;        /* keep ALL field names on one line */
+  display:inline-block;
+}
+
+/* make the first (label) column wide enough so labels don't wrap */
+.form-table td:first-child {
+  width: 190px;               /* adjust 180–220 if you need more room */
 }
 
 /* SECTION TABS (Personal Information, Contact, Address...) */
@@ -91,8 +100,14 @@ h2, h3, h4, .sectionTitle {
   box-shadow:0 4px 10px rgba(0,0,0,.1);
 }
 
-.form-table td{ padding:6px; vertical-align:middle; }
+.form-table td{
+  padding:6px;
+  vertical-align:middle;
+}
 
+/* ==========================================================
+   INPUTS
+========================================================== */
 input[type="text"], input[type="email"], input[type="password"],
 input[type="tel"], select, textarea{
   width:220px; max-width:100%;
