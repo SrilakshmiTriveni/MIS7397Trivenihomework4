@@ -509,3 +509,88 @@ body {
   border-radius: 6px;
   background: #f9fafb;
 }
+/* =========================
+   HW4 additions – do NOT change anything above this line
+   ========================= */
+
+/* Keep the header on screen when scrolling */
+#top {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Keep the footer always visible at the bottom */
+#page-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 900;
+}
+
+/* Make room so the fixed footer doesn't cover the form */
+body {
+  padding-bottom: 80px;
+}
+
+/* Greeting / cookie UI in the header (added by JS) */
+#welcomeBox {
+  margin-top: 4px;
+  font-size: 0.95rem;
+  color: #111;
+}
+
+#welcomeBox #greetingText {
+  font-weight: 600;
+}
+
+.not-you {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.85rem;
+  color: #222;
+}
+
+.not-you input[type="checkbox"] {
+  margin-right: 4px;
+}
+
+/* “Remember me” checkbox text in the form (added by JS) */
+.remember-me-label {
+  font-size: 0.9rem;
+  color: #222;
+}
+
+/* iFrame section at the bottom of the page */
+#infoFrameSection {
+  width: 92%;
+  max-width: 1000px;
+  margin: 24px auto 40px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 16px 18px 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+#infoFrameSection h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #166534;
+}
+
+#infoFrameSection p {
+  font-size: 0.9rem;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+#healthFrame {
+  width: 100%;
+  min-height: 280px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f9fafb;
+}
+
