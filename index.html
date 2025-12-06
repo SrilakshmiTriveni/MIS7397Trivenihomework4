@@ -393,14 +393,14 @@ Description: Registration form for a clinic patient portal (Homework 3)
             <input type="password" id="pw" name="pw" required
                    placeholder="Enter password"
                    title="8–30 chars; include upper, lower, digit, special (!@#%^&*()_+=-/><.,~`); no double quotes; cannot contain your user id, first, or last name."
-                   pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()_+=\-\/><.,~`])[A-Za-z\d!@#%^&*()_+=\-\/><.,~`]{8,30}$"/>
+                   pattern="^(?=.*[A-Z])(?=.*[A-z])(?=.*\d)(?=.*[!@#%^&*()_+=\-\/><.,~`])[A-Za-z\d!@#%^&*()_+=\-\/><.,~`]{8,30}$"/>
           </td>
           <td><label for="pw2" class="padR"><span class="req">*</span> Re-enter Password:</label></td>
           <td>
             <input type="password" id="pw2" name="pw2" required
                    placeholder="Re-enter password"
                    title="Must match the first password exactly."
-                   pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()_+=\-\/><.,~`])[A-Za-z\d!@#%^&*()_+=\-\/><.,~`]{8,30}$"/>
+                   pattern="^(?=.*[A-Z])(?=.*[A-z])(?=.*\d)(?=.*[!@#%^&*()_+=\-\/><.,~`])[A-Za-z\d!@#%^&*()_+=\-\/><.,~`]{8,30}$"/>
             <span class="form-error" id="pwErr"></span>
           </td>
           <td colspan="2"></td>
@@ -417,12 +417,13 @@ Description: Registration form for a clinic patient portal (Homework 3)
           </td>
         </tr>
 
-        <!-- Buttons -->
+        <!-- Buttons (matches professor style) -->
         <tr>
           <td colspan="6" class="actions-row">
-            <input type="reset" value="CLEAR AND START OVER" />
-            <button type="button" id="btnValidate" class="btn-review">VALIDATE</button>
-            <!-- Real SUBMIT button is created only when there are NO errors -->
+            <button type="button" id="btnGetData" class="btn-review">Get Data V1</button>
+            <button type="button" id="btnCheck" class="btn-review">Check your input</button>
+            <button type="submit" id="btnSend" class="btn-submit-final">Send the Form</button>
+            <input type="reset" value="Clear and Start over" />
           </td>
         </tr>
       </table>
@@ -435,9 +436,25 @@ Description: Registration form for a clinic patient portal (Homework 3)
       </div>
     </form>
 
+    <!-- ===== Data grid: Datename / Type / Value ===== -->
+    <section id="dataGridSection" aria-label="Form data grid">
+      <table id="dataGrid">
+        <thead>
+          <tr>
+            <th>Datename</th>
+            <th>Type</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- rows filled by JavaScript -->
+        </tbody>
+      </table>
+    </section>
+
     <!-- ===== iFrame section (BODY) ===== -->
     <section id="infoFrameSection" aria-label="Helpful resources">
-      <h3>Learn more (Health Tops demo)</h3>
+      <h3>Learn more (iFrame demo)</h3>
       <p>
         Health Tips:
         Drink 6–8 glasses of water daily.
@@ -449,15 +466,16 @@ Description: Registration form for a clinic patient portal (Homework 3)
         Maintain mental wellness and reduce stress.
         Please click and watch the video below for more health tips.
       </p>
-   <iframe id="healthFrame"
-    width="100%"
-    height="420"
-    src="https://www.youtube.com/embed/D8A176VqHnQ"
-    title="YouTube Video"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-</iframe>
+
+      <iframe id="healthFrame"
+        width="100%"
+        height="420"
+        src="https://www.youtube.com/embed/D8A176VqHnQ"
+        title="YouTube Video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
     </section>
   </main>
 
