@@ -1,374 +1,187 @@
 body { height:100%; margin:0; padding:0; }
 body{
-  display:flex;
-  flex-direction:column;
-  height:100vh;
-  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-  color:#111; 
-  background-color:#9fbf90;
+  display:flex; flex-direction:column; align-items:stretch;
+  min-height:100vh;
+  background:rgb(183,214,183);
+  color:#1f2623;
+  font-family:Arial, Helvetica, sans-serif;
+  line-height:1.4;
 }
-
-/* ===== page container ===== */
-#page-wrap {
-  max-width:1024px;
-  margin:0 auto 0 auto;
-}
-
-/* ===== footer ===== */
-#page-footer { width:100%; }
-
-footer{
-  background-color:#9fbf90;
-  border-top:1px solid #a8a8a8;
-  width:100%;
-  margin:0;
-  padding:0;
-  font-size:0.9em;
-  color:#000;
-}
-
-/* footer inner row alignment */
-.footer-row{
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:space-between;
-  max-width:1024px;
-  margin:0 auto;
-}
-
-/* footer logo / left cell */
-.footer-left{
-  flex:0 0 auto;
-}
-
-/* footer center text */
-.footer-center{
-  flex:1 1 auto;
-  text-align:center;
-}
-
-/* footer right-cell */
-.footer-right{
-  flex:0 0 auto;
-}
-
-/* footer anchor */
-.footer-link{
-  color:#000;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-.footer-link:hover{
-  color:#444;
-  text-decoration:underline;
-}
+header, main, #page-footer { width:100%; }
 
 /* ===== Header ===== */
-header{
-  background-color:#d4545e;
-  width:100%;
-  margin:0;
-  padding:0;
-  border-bottom:4px solid #7d2b30;
-}
-
-header table{
-  width:100%;
-  border-collapse:collapse;
-}
+header{ background-color:rgb(231,74,100); padding:10px 0; }
+header table{ width:100%; border-collapse:collapse; table-layout:fixed; }
+header td{ padding:8px; vertical-align:middle; }
+#logo{ width:70px; height:auto; display:block; }
 
 header h2{
-  margin:0;
-  padding:24px 0 4px 0;
-  font-size:1.6em;
+  margin:0; padding:4px 0 0 0;
+  font-size:26px;
+  color:#111;
+  text-align:center;
+}
+#todayBox{
+  font-size:11px; text-align:right;
   color:#111;
 }
 
-header td{
-  vertical-align:top;
-}
-
-/* logo in header */
-.image{
-  padding:8px 0 0 12px;
-}
-
-#logo{
-  height:56px;
-}
-
-#todayBox{
-  padding:4px 12px 4px 0;
-  font-size:0.8em;
-  text-align:right;
-}
-
-/* ===== Main form area ===== */
+/* ===== Main ===== */
 main{
   flex:1 0 auto;
-  padding:16px 0 24px 0;
+  padding:20px 0 40px 0;
 }
 
-/* outer form panel */
-.form-panel{
-  margin:0 auto;
+/* main inner wrap */
+#page-wrap{
+  width:92%;
   max-width:1024px;
+  margin:0 auto;
 }
 
-/* patient registration card */
-#form-card{
-  background-color:#f6fbf4;
-  border-radius:10px;
-  box-shadow:0 0 14px rgba(0,0,0,0.25);
-  padding:12px 28px 26px 28px;
-}
-
-/* ===== Form table ===== */
-.form-table{
-  width:100%;
-  border-collapse:collapse;
-  border:0;
-}
-
-.form-table th{
-  text-align:center;
-  background-color:#d4545e;
+/* ===== Form title bar ===== */
+#formTitleBar{
+  background-color:rgb(231,74,100);
   color:#fff;
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
   padding:10px 0;
-  border-radius:6px;
-  font-size:1.05em;
-  border-bottom:3px solid #7d2b30;
+  border-radius:10px 10px 0 0;
+  margin-top:12px;
 }
 
-.form-table td{
-  padding:6px 6px;
-  font-size:0.95em;
+/* ===== Card around form ===== */
+#formCard{
+  background:#f7fbf5;
+  border-radius:0 0 10px 10px;
+  box-shadow:0 0 10px rgba(0,0,0,0.3);
+  padding:18px 16px 24px 16px;
 }
 
-/* section headings (Personal information, etc.) */
+/* ===== Form table (panel) ===== */
+.form-table{
+  margin:0 auto;
+  border-collapse:separate;
+  border-spacing:10px 12px;
+  width:92%;
+  max-width:1000px;
+  background:#eef6ee;
+  border:2px solid rgba(0,0,0,0.15);
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+.form-table td{ vertical-align:middle; padding:6px; }
+
+.section-header{
+  text-align:left;
+  padding-top:14px;
+  padding-bottom:4px;
+}
 .section-tab{
   display:inline-block;
   padding:6px 14px;
-  background-color:#d4545e;
+  background:rgb(231,74,100);
   color:#fff;
   border-radius:6px;
   font-weight:bold;
-  font-size:0.92em;
-  margin:12px 0 4px 0;
+  font-size:12px;
+  margin:0;
 }
-
 .section-line{
-  border-bottom:1px solid #ccc;
-  margin:4px 0 12px 0;
+  height:2px; background:rgba(0,0,0,0.25);
+  margin:8px 0 16px 0; clear:both;
 }
 
-/* labels */
-.form-table label{
-  font-size:0.95em;
-  font-weight:normal;
-}
-
-/* label cells, keep them tight */
-.form-table .lbl,
-.form-table .td-right{
-  white-space:nowrap;
-}
-
-/* right-aligned labels */
-.td-right{
-  text-align:right;
-}
-
-/* small red asterisk */
-.req{
-  color:#b11;
-  font-weight:bold;
-}
-
-/* text and other inputs */
+/* ===== Inputs ===== */
 .form-table input[type="text"],
 .form-table input[type="email"],
 .form-table input[type="password"],
-.form-table input[type="date"],
-.form-table select{
-  font-size:0.95em;
-  padding:4px 6px;
-  border-radius:4px;
-  border:1px solid #bbb;
-  min-width:150px;
+.form-table input[type="tel"],
+.form-table select,
+.form-table textarea{
+  width:220px; max-width:100%;
+  padding:8px 10px;
+  border:1px solid #888; border-radius:4px; font-size:14px; background:#fff;
+}
+.form-table input:focus,
+.form-table select:focus,
+.form-table textarea:focus{
+  outline:none;
+  border-color:#33691e;
+  box-shadow:0 0 3px rgba(51,105,30,0.7);
 }
 
-/* wider inputs */
-#address1, #address2, #email{
-  width:260px;
+/* specific widths */
+#fname, #lname{ width:200px; }
+#mi{ width:40px; text-align:center; }
+#dob, #travelDate, #moveInDate{ width:140px; }
+#ssn{ width:120px; }
+#email{ width:220px; }
+#phone{ width:120px; }
+#medicalId{ width:180px; }
+#address1, #address2{ width:260px; }
+#city{ width:160px; }
+#state{ width:130px; }
+#zip{ width:80px; }
+#userid{ width:180px; }
+#pw, #pw2{ width:160px; }
+
+/* textarea fields */
+#symptoms, #otherNotes{
+  width:420px; max-width:100%; min-height:70px;
+  resize:vertical;
 }
 
-#symptoms,
-#otherNotes{
-  width:95%;
-  min-height:60px;
-  font-size:0.95em;
-  border-radius:4px;
-  border:1px solid #bbb;
-  padding:4px 6px;
+/* labels and layout */
+.lbl{
+  white-space:nowrap;
+  font-size:13px;
+}
+.td-right{ text-align:right; white-space:nowrap; }
+
+/* section extra spacing */
+.row-spacer td{ padding-top:12px; }
+
+/* radios & checkboxes */
+.form-table input[type="radio"]{ width:auto; margin-right:4px; }
+.checkbox-group{
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:8px; margin:8px 0;
+}
+.checkbox-group label{
+  display:flex; align-items:center; gap:6px; white-space:nowrap;
+}
+
+/* errors & notes */
+.req{ color:#b00020; margin-right:4px; font-weight:700; }
+.form-error{
+  color:#b00020; font-size:12px; margin-left:6px;
+  display:block; margin-top:4px;
+}
+.form-note{
+  font-size:11px; color:#333; margin-left:6px;
 }
 
 /* numeric sliders */
 input[type="range"]{
-  width:180px;
+  width:160px;
 }
 
-/* password fields a little wider */
-#pw, #pw2{
-  width:180px;
-}
-
-/* state select box */
-#state{
-  min-width:120px;
-}
-
-/* zip smaller */
-#zip{
-  width:80px;
-}
-
-/* phone */
-#phone{
-  width:120px;
-}
-
-/* travel dates */
-#travelDate, #moveInDate{
-  width:140px;
-}
-
-/* errors */
-.form-error{
-  color:#b11;
-  font-size:0.8em;
-  margin-left:6px;
-  display:block;
-  margin-top:2px;
-}
-
-/* notes text near fields */
-.form-note{
-  font-size:0.8em;
-  color:#333;
-  margin-left:6px;
-}
-
-/* review pane */
-#reviewPane{
-  margin-top:20px;
-  padding:10px;
-  border-radius:6px;
-  background-color:#fff;
-  border:1px solid #ccc;
-}
-
-#reviewPane h3{
-  margin-top:0;
-  margin-bottom:6px;
-}
-
-.review-body ul{
-  margin:0;
-  padding-left:20px;
-}
-
-.review-body li{
-  margin-bottom:3px;
-  font-size:0.9em;
-}
-
-/* inline lightning buttons */
-.btn-sm{
-  border-radius:4px;
-  background-color:#d4545e;
-  border:1px solid #7d2b30;
-  padding:2px 8px;
-  color:#fff;
-  font-size:0.8em;
-  cursor:pointer;
-}
-
-.btn-sm.alt{
-  background-color:#777;
-  border-color:#444;
-}
-
-/* link-like */
-.linklike{
-  background:none;
-  border:none;
-  padding:0 0 0 8px;
-  color:#0645ad;
-  font-size:0.8em;
-  cursor:pointer;
-  text-decoration:underline;
-}
-
-/* bottom actions row */
-.actions-row{
-  text-align:center;
-  padding-top:14px !important;
-}
-
-/* Clear button (reset) */
-input[type="reset"]{
-  padding:6px 14px;
-  border-radius:4px;
-  border:1px solid #777;
-  background-color:#eee;
-  font-weight:bold;
-  font-size:0.9em;
-  cursor:pointer;
-  margin-right:8px;
-}
-
-/* validate button */
-.btn-review{
-  padding:6px 16px;
-  border-radius:4px;
-  border:1px solid #7d2b30;
-  background-color:#d4545e;
-  color:#fff;
-  font-weight:bold;
-  font-size:0.9em;
-  cursor:pointer;
-}
-
-/* final submit created dynamically */
-.btn-submit-final{
-  padding:6px 18px;
-  border-radius:4px;
-  border:1px solid #1b5e20;
-  background-color:#2e7d32;
-  color:#fff;
-  font-weight:bold;
-  font-size:0.9em;
-  margin-left:8px;
-  cursor:pointer;
-}
-
-/* slider display text */
+/* slider display */
 #range-slider,
 #salaryOut,
 #priceOut,
 #priceDisplayValue{
-  font-size:0.9em;
+  font-size:12px;
   margin-left:6px;
 }
 
-.money{
-  font-weight:bold;
-}
+/* money bold */
+.money{ font-weight:bold; }
 
-/* price display card */
+/* price display mini card */
 .price-display{
   display:inline-block;
   padding:4px 10px;
@@ -376,151 +189,142 @@ input[type="reset"]{
   border:1px solid #ccc;
   background-color:#fff;
 }
-
 .price-display-title{
-  font-size:0.8em;
+  font-size:11px;
   color:#555;
 }
-
 .price-display-value{
-  font-size:0.95em;
+  font-size:13px;
   font-weight:bold;
 }
 
-/* radio / checkbox groups */
-.checkbox-group label{
-  margin-right:14px;
+/* review pane */
+#reviewPane{
+  margin:20px auto 0 auto;
+  width:92%; max-width:1000px;
+  background:#fff;
+  border-radius:8px;
+  border:1px solid #bbb;
+  padding:10px 14px;
+}
+#reviewPane h3{
+  margin:0 0 6px 0;
 }
 
-.price-range-row{
-  display:flex;
-  align-items:center;
+/* review body list */
+.review-body ul{
+  margin:0; padding-left:20px;
+}
+.review-body li{
+  font-size:13px; margin-bottom:3px;
 }
 
-.price-range-row .range-group{
-  margin-right:12px;
+/* buttons */
+.actions-row{ text-align:center; padding-top:16px !important; }
+.btn-review{
+  padding:6px 16px;
+  border-radius:4px;
+  border:1px solid #7d2b30;
+  background-color:rgb(231,74,100);
+  color:#fff;
+  font-weight:bold;
+  font-size:13px;
+  cursor:pointer;
+  margin-right:8px;
+}
+.btn-review:hover{
+  background-color:#b33243;
 }
 
-.price-range-row .tiny{
-  display:block;
-  font-size:0.75em;
-  color:#555;
-  margin-bottom:-2px;
+/* Clear / reset */
+input[type="reset"]{
+  padding:6px 14px;
+  border-radius:4px;
+  border:1px solid #555;
+  background-color:#eee;
+  font-weight:bold;
+  font-size:13px;
+  cursor:pointer;
+}
+input[type="reset"]:hover{
+  background-color:#ddd;
 }
 
-/* error highlight on invalid input */
+/* final submit (added by JS) */
+.btn-submit-final{
+  padding:6px 18px;
+  border-radius:4px;
+  border:1px solid #1b5e20;
+  background-color:#2e7d32;
+  color:#fff;
+  font-weight:bold;
+  font-size:13px;
+  cursor:pointer;
+  margin-left:6px;
+}
+.btn-submit-final:hover{
+  background-color:#225b28;
+}
+
+/* highlight invalid input */
 .input-error{
   border-color:#d32f2f !important;
   background-color:#ffebee;
 }
 
-/* name row */
-.row-names .field{
-  width:30%;
+/* ===== Footer ===== */
+#page-footer{
+  margin-top:20px;
+}
+footer{
+  background-color:rgb(183,214,183);
+  border-top:1px solid #aaa;
+  padding:8px 0;
+  font-size:11px;
+}
+.footer-inner{
+  width:92%;
+  max-width:1024px;
+  margin:0 auto;
+  text-align:center;
+}
+.footer-brand{ font-weight:bold; margin-right:6px; }
+.footer-sep{ margin:0 4px; }
+.footer-btn{
+  padding:4px 10px;
+  background:#d4545e;
+  color:#fff;
+  text-decoration:none;
+  border-radius:4px;
+  font-size:11px;
+}
+.footer-btn:hover{
+  background:#b33243;
+}
+.footer-link{
+  color:#0645ad;
+  text-decoration:none;
+  font-size:11px;
+}
+.footer-link:hover{
+  text-decoration:underline;
+}
+.footer-address{
+  margin-left:6px;
 }
 
-/* middle initial */
-.field-mi input{
-  width:35px;
-}
-
-/* city/state/zip row label spacing */
-.row-csz .lbl-tight,
-.form-table .lbl{
-  white-space:nowrap; word-wrap:normal;
-}
-
-/* ===== Keep header and footer on screen (content protection) ===== */
-#top {
-  position: sticky;      /* header stays at top when scrolling */
-  top: 0;
-  z-index: 1000;
-}
-
-#page-footer {
-  position: fixed;       /* footer always visible at bottom */
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: 900;
-}
-
-/* Make room so footer doesn't cover the form content */
-body {
-  padding-bottom: 80px;  /* keep your existing body styles above; this only adds padding */
-}
-
-/* ===== Greeting / cookie UI in the header ===== */
-#welcomeBox {
-  margin-top: 4px;
-  font-size: 0.95rem;
-  color: #111;
-}
-
-#welcomeBox #greetingText {
-  font-weight: 600;
-}
-
-.not-you {
-  display: inline-block;
-  margin-left: 8px;
-  font-size: 0.85rem;
-  color: #222;
-}
-
-.not-you input[type="checkbox"] {
-  margin-right: 4px;
-}
-
-/* Remember-me checkbox text in the form */
-.remember-me-label {
-  font-size: 0.9rem;
-  color: #222;
-}
-
-/* ===== iFrame card at the bottom of the page ===== */
-#infoFrameSection {
-  width: 92%;
-  max-width: 1000px;
-  margin: 24px auto 40px;
-  background: #ffffff;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 16px 18px 20px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-}
-
-#infoFrameSection h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  color: #166534;
-}
-
-#infoFrameSection p {
-  font-size: 0.9rem;
-  margin-top: 0;
-  margin-bottom: 12px;
-}
-
-#healthFrame {
-  width: 100%;
-  min-height: 280px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #f9fafb;
-}
 /* =========================
-   HW4 additions – do NOT change anything above this line
+   HW4 additions: sticky header/footer, greeting, iframe
    ========================= */
 
-/* Keep the header on screen when scrolling */
+/* If you wrap header+nav in #top, it will stick; if not, this does nothing */
 #top {
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-/* Keep the footer always visible at the bottom */
+/* Keep footer visible; page already has #page-footer wrapper */
 #page-footer {
   position: fixed;
   left: 0;
@@ -529,12 +333,12 @@ body {
   z-index: 900;
 }
 
-/* Make room so the fixed footer doesn't cover the form */
+/* So fixed footer doesn't cover the form content */
 body {
   padding-bottom: 80px;
 }
 
-/* Greeting / cookie UI in the header (added by JS) */
+/* Greeting / cookie UI */
 #welcomeBox {
   margin-top: 4px;
   font-size: 0.95rem;
@@ -556,13 +360,13 @@ body {
   margin-right: 4px;
 }
 
-/* “Remember me” checkbox text in the form (added by JS) */
+/* Remember-me checkbox text */
 .remember-me-label {
   font-size: 0.9rem;
   color: #222;
 }
 
-/* iFrame section at the bottom of the page */
+/* iFrame card */
 #infoFrameSection {
   width: 92%;
   max-width: 1000px;
@@ -593,4 +397,3 @@ body {
   border-radius: 6px;
   background: #f9fafb;
 }
-
