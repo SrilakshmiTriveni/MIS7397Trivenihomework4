@@ -107,7 +107,10 @@ main {
   text-align: right;
   margin-right: 8px;
 }
-
+/* push First Name group slightly right */
+.row-names td:first-child {
+  padding-left: 60px;   /* tweak this value if needed */
+}
 /* Section titles */
 .section-tab {
   background-color: #e0f0ff;
