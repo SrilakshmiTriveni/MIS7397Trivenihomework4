@@ -94,7 +94,7 @@ main {
 
 /* widen the first cell so the right-aligned label sits above the DOB label below */
 .row-names td:first-child {
-  width: 220px;
+  width: 120px;
 }
 
 /* input widths for name fields */
