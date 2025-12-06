@@ -1,9 +1,12 @@
+/* ==========================================================
+   GLOBAL PAGE LAYOUT
+========================================================== */
 #top { position: sticky; top: 0; z-index: 1000; }
 #page-footer { position: fixed; bottom: 0; left: 0; width: 100%; z-index: 900; }
 body { padding-bottom: 80px; }
 
-body { height:100%; margin:0; padding:0; }
 body{
+  height:100%; margin:0; padding:0;
   display:flex; flex-direction:column; align-items:stretch;
   min-height:100vh;
   background:rgb(183,214,183);
@@ -11,414 +14,166 @@ body{
   font-family:Arial, Helvetica, sans-serif;
   line-height:1.4;
 }
+
 header, main, #page-footer { width:100%; }
 
-/* ===== Header ===== */
+/* ==========================================================
+   HEADER
+========================================================== */
 header{ background-color:rgb(231,74,100); padding:10px 0; }
-header table{ width:100%; border-collapse:collapse; table-layout:fixed; }
+header table{ width:100%; table-layout:fixed; border-collapse:collapse; }
 header td{ padding:8px; vertical-align:middle; }
-#logo{ width:70px; height:auto; display:block; }
+#logo{ width:70px; display:block; }
 
 header h2{
-  margin:0; padding:4px 0 0 0;
-  font-size:26px;
-  color:#111;
-  text-align:center;
-}
-#todayBox{
-  font-size:11px; text-align:right;
-  color:#111;
+  margin:0; font-size:26px; color:#111; text-align:center;
 }
 
-/* ===== Main ===== */
-main{
-  flex:1 0 auto;
-  padding:20px 0 40px 0;
-}
+#todayBox{ font-size:12px; text-align:right; font-weight:bold; }
 
-/* main inner wrap */
-#page-wrap{
-  width:92%;
-  max-width:1024px;
-  margin:0 auto;
-}
+/* ==========================================================
+   MAIN + FORM CARD
+========================================================== */
+main{ flex:1; padding:20px 0 40px 0; }
 
-/* ===== Form title bar ===== */
+#page-wrap{ width:92%; max-width:1024px; margin:auto; }
+
 #formTitleBar{
-  background-color:rgb(231,74,100);
-  color:#fff;
-  text-align:center;
-  font-weight:bold;
-  font-size:16px;
-  padding:10px 0;
-  border-radius:10px 10px 0 0;
-  margin-top:12px;
-}
-
-/* ===== Card around form ===== */
-#formCard{
-  background:#f7fbf5;
-  border-radius:0 0 10px 10px;
-  box-shadow:0 0 10px rgba(0,0,0,0.3);
-  padding:18px 16px 24px 16px;
-}
-
-/* ===== Form table (panel) ===== */
-.form-table{
-  margin:0 auto;
-  border-collapse:separate;
-  border-spacing:10px 12px;
-  width:92%;
-  max-width:1000px;
-  background:#eef6ee;
-  border:2px solid rgba(0,0,0,0.15);
-  border-radius:10px;
-  padding:20px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-.form-table td{ vertical-align:middle; padding:6px; }
-
-.section-header{
-  text-align:left;
-  padding-top:14px;
-  padding-bottom:4px;
-}
-.section-tab{
-  display:inline-block;
-  padding:6px 14px;
   background:rgb(231,74,100);
-  color:#fff;
-  border-radius:6px;
-  font-weight:bold;
-  font-size:12px;
-  margin:0;
+  color:#fff; text-align:center; font-size:17px;
+  font-weight:900; padding:12px 0; border-radius:12px 12px 0 0;
 }
+
+#formCard{
+  background:#f7fbf5; border-radius:0 0 12px 12px;
+  box-shadow:0 0 10px rgba(0,0,0,.3);
+  padding:20px;
+}
+
+/* ==========================================================
+   MAKE ALL LABELS + SECTION HEADINGS BOLD
+========================================================== */
+label, .lbl, .form-table td label {
+  font-weight:900 !important;
+  font-size:15px;
+  color:#000;
+}
+
+/* SECTION TABS (Personal Information, Contact, Address...) */
+.section-tab{
+  background:rgb(231,74,100);
+  padding:7px 16px; color:#fff;
+  font-weight:900 !important;
+  font-size:13px; border-radius:6px;
+}
+
+/* Section headers */
+h2, h3, h4, .sectionTitle {
+  font-weight:900 !important;
+  font-size:19px;
+  color:#166534;
+}
+
+/* line under headings */
 .section-line{
-  height:2px; background:rgba(0,0,0,0.25);
-  margin:8px 0 16px 0; clear:both;
+  height:2px; background:#0003;
+  margin-top:6px; margin-bottom:14px;
 }
 
-/* ===== Inputs ===== */
-.form-table input[type="text"],
-.form-table input[type="email"],
-.form-table input[type="password"],
-.form-table input[type="tel"],
-.form-table select,
-.form-table textarea{
+/* ==========================================================
+   FORM TABLE LAYOUT
+========================================================== */
+.form-table{
+  width:92%; max-width:1000px; margin:auto;
+  border-spacing:10px 14px; padding:16px;
+  background:#eef6ee; border-radius:10px;
+  border:2px solid rgba(0,0,0,.15);
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+.form-table td{ padding:6px; vertical-align:middle; }
+
+input[type="text"], input[type="email"], input[type="password"],
+input[type="tel"], select, textarea{
   width:220px; max-width:100%;
-  padding:8px 10px;
-  border:1px solid #888; border-radius:4px; font-size:14px; background:#fff;
+  padding:8px 10px; border:1px solid #777;
+  border-radius:4px; font-size:14px; background:#fff;
+  font-weight:600;
 }
-.form-table input:focus,
-.form-table select:focus,
-.form-table textarea:focus{
+
+input:focus, select:focus, textarea:focus{
+  border-color:#256916;
+  box-shadow:0 0 3px rgba(0,80,20,.7);
   outline:none;
-  border-color:#33691e;
-  box-shadow:0 0 3px rgba(51,105,30,0.7);
 }
 
-/* specific widths */
-#fname, #lname{ width:200px; }
-#mi{ width:40px; text-align:center; }
-#dob, #travelDate, #moveInDate{ width:140px; }
-#ssn{ width:120px; }
-#email{ width:220px; }
-#phone{ width:120px; }
-#medicalId{ width:180px; }
-#address1, #address2{ width:260px; }
-#city{ width:160px; }
-#state{ width:130px; }
-#zip{ width:80px; }
-#userid{ width:180px; }
-#pw, #pw2{ width:160px; }
+/* ==========================================================
+   FIELD WIDTHS
+========================================================== */
+#fname,#lname{ width:200px; }
+#mi{ width:50px; text-align:center; font-weight:bold; }
+#dob,#travelDate,#moveInDate{ width:140px; }
+#ssn{ width:130px; }
+#email{ width:230px; }
+#phone{ width:150px; }
+#medicalId{ width:200px; }
+#address1,#address2{ width:260px; }
+#city{ width:180px; }
+#state{ width:140px; }
+#zip{ width:90px; font-weight:bold; }
+#userid,#pw,#pw2{ width:180px; }
+textarea{ font-weight:bold; }
 
-/* textarea fields */
-#symptoms, #otherNotes{
-  width:420px; max-width:100%; min-height:70px;
-  resize:vertical;
-}
+/* ==========================================================
+   SLIDERS + DISPLAY
+========================================================== */
+input[type="range"]{ width:160px; }
+.money{ font-weight:900; }
 
-/* labels and layout */
-.lbl{
-  white-space:nowrap;
-  font-size:13px;
-}
-.td-right{ text-align:right; white-space:nowrap; }
-
-/* section extra spacing */
-.row-spacer td{ padding-top:12px; }
-
-/* radios & checkboxes */
-.form-table input[type="radio"]{ width:auto; margin-right:4px; }
-.checkbox-group{
-  display:grid; grid-template-columns:repeat(2,1fr);
-  gap:8px; margin:8px 0;
-}
-.checkbox-group label{
-  display:flex; align-items:center; gap:6px; white-space:nowrap;
+/* ==========================================================
+   BUTTONS
+========================================================== */
+.btn-review,input[type="reset"],.btn-submit-final{
+  padding:7px 18px; border-radius:4px;
+  font-size:14px; font-weight:900; cursor:pointer;
 }
 
-/* errors & notes */
-.req{ color:#b00020; margin-right:4px; font-weight:700; }
-.form-error{
-  color:#b00020; font-size:12px; margin-left:6px;
-  display:block; margin-top:4px;
-}
-.form-note{
-  font-size:11px; color:#333; margin-left:6px;
-}
-
-/* numeric sliders */
-input[type="range"]{
-  width:160px;
-}
-
-/* slider display */
-#range-slider,
-#salaryOut,
-#priceOut,
-#priceDisplayValue{
-  font-size:12px;
-  margin-left:6px;
-}
-
-/* money bold */
-.money{ font-weight:bold; }
-
-/* price display mini card */
-.price-display{
-  display:inline-block;
-  padding:4px 10px;
-  border-radius:6px;
-  border:1px solid #ccc;
-  background-color:#fff;
-}
-.price-display-title{
-  font-size:11px;
-  color:#555;
-}
-.price-display-value{
-  font-size:13px;
-  font-weight:bold;
-}
-
-/* review pane */
-#reviewPane{
-  margin:20px auto 0 auto;
-  width:92%; max-width:1000px;
-  background:#fff;
-  border-radius:8px;
-  border:1px solid #bbb;
-  padding:10px 14px;
-}
-#reviewPane h3{
-  margin:0 0 6px 0;
-}
-
-/* review body list */
-.review-body ul{
-  margin:0; padding-left:20px;
-}
-.review-body li{
-  font-size:13px; margin-bottom:3px;
-}
-
-/* buttons */
-.actions-row{ text-align:center; padding-top:16px !important; }
 .btn-review{
-  padding:6px 16px;
-  border-radius:4px;
-  border:1px solid #7d2b30;
-  background-color:rgb(231,74,100);
-  color:#fff;
-  font-weight:bold;
-  font-size:13px;
-  cursor:pointer;
-  margin-right:8px;
+  background:rgb(231,74,100); color:#fff; border:1px solid #7d2b30;
 }
-.btn-review:hover{
-  background-color:#b33243;
-}
+.btn-review:hover{ background:#b33243; }
 
-/* Clear / reset */
-input[type="reset"]{
-  padding:6px 14px;
-  border-radius:4px;
-  border:1px solid #555;
-  background-color:#eee;
-  font-weight:bold;
-  font-size:13px;
-  cursor:pointer;
-}
-input[type="reset"]:hover{
-  background-color:#ddd;
-}
+input[type="reset"]{ background:#eee; border:1px solid #444; }
+input[type="reset"]:hover{ background:#ddd; }
 
-/* final submit (added by JS) */
 .btn-submit-final{
-  padding:6px 18px;
-  border-radius:4px;
-  border:1px solid #1b5e20;
-  background-color:#2e7d32;
-  color:#fff;
-  font-weight:bold;
-  font-size:13px;
-  cursor:pointer;
-  margin-left:6px;
+  background:#2e7d32; border:1px solid #1e5e22; color:#fff;
 }
-.btn-submit-final:hover{
-  background-color:#225b28;
+.btn-submit-final:hover{ background:#1f5525; }
+
+/* ==========================================================
+   IFRAMES + COOKIE GREETING
+========================================================== */
+#welcomeBox{ font-size:1rem; font-weight:600; color:#000; }
+
+#infoFrameSection{
+  width:92%; max-width:1000px; margin:25px auto 80px;
+  background:#fff; border-radius:10px;
+  padding:18px; border:1px solid #ccc; box-shadow:0 3px 8px #0002;
 }
 
-/* highlight invalid input */
-.input-error{
-  border-color:#d32f2f !important;
-  background-color:#ffebee;
+#healthFrame{
+  width:100%; min-height:300px;
+  border-radius:6px; background:#f9fafb;
+  border:2px solid #aaa;
 }
 
-/* ===== Footer ===== */
-#page-footer{
-  margin-top:20px;
-}
+/* ==========================================================
+   FOOTER
+========================================================== */
+#page-footer{ bottom:0; position:fixed; }
 footer{
-  background-color:rgb(183,214,183);
-  border-top:1px solid #aaa;
-  padding:8px 0;
-  font-size:11px;
+  background:rgb(183,214,183);
+  padding:10px; border-top:1px solid #0005;
+  font-size:12px; font-weight:bold;
 }
-.footer-inner{
-  width:92%;
-  max-width:1024px;
-  margin:0 auto;
-  text-align:center;
-}
-.footer-brand{ font-weight:bold; margin-right:6px; }
-.footer-sep{ margin:0 4px; }
-.footer-btn{
-  padding:4px 10px;
-  background:#d4545e;
-  color:#fff;
-  text-decoration:none;
-  border-radius:4px;
-  font-size:11px;
-}
-.footer-btn:hover{
-  background:#b33243;
-}
-.footer-link{
-  color:#0645ad;
-  text-decoration:none;
-  font-size:11px;
-}
-.footer-link:hover{
-  text-decoration:underline;
-}
-.footer-address{
-  margin-left:6px;
-}
-
-/* =========================
-   HW4 additions: sticky header/footer, greeting, iframe
-   ========================= */
-
-/* If you wrap header+nav in #top, it will stick; if not, this does nothing */
-#top {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-/* Keep footer visible; page already has #page-footer wrapper */
-#page-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: 900;
-}
-
-/* So fixed footer doesn't cover the form content */
-body {
-  padding-bottom: 80px;
-}
-
-/* Greeting / cookie UI */
-#welcomeBox {
-  margin-top: 4px;
-  font-size: 0.95rem;
-  color: #111;
-}
-
-#welcomeBox #greetingText {
-  font-weight: 600;
-}
-
-.not-you {
-  display: inline-block;
-  margin-left: 8px;
-  font-size: 0.85rem;
-  color: #222;
-}
-
-.not-you input[type="checkbox"] {
-  margin-right: 4px;
-}
-
-/* Remember-me checkbox text */
-.remember-me-label {
-  font-size: 0.9rem;
-  color: #222;
-}
-
-/* iFrame card */
-#infoFrameSection {
-  width: 92%;
-  max-width: 1000px;
-  margin: 24px auto 40px;
-  background: #ffffff;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 16px 18px 20px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-}
-
-#infoFrameSection h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  color: #166534;
-}
-
-#infoFrameSection p {
-  font-size: 0.9rem;
-  margin-top: 0;
-  margin-bottom: 12px;
-}
-
-#healthFrame {
-  width: 100%;
-  min-height: 280px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #f9fafb;
-}
-/* === Make ALL form labels bold === */
-form label,
-.form-section-title,
-.form-header,
-.section-title {
-    font-weight: 700 !important;     /* makes labels bold */
-    color: #000;                     /* optional, darker text */
-}
-
-/* Input titles like First Name, Last Name etc. */
-label {
-    font-size: 15px;                 /* slightly larger text */
-}
-
-/* Section headings: Personal Info, Contact Info, Address... */
-h3, h2, .sectionTitle {
-    font-weight: 800 !important;
-    font-size: 18px;
-    color: #166534;
-}
-
