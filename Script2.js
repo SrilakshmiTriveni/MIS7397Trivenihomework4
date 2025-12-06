@@ -57,16 +57,7 @@ function money(num) {
   return "$" + num.toLocaleString("en-US", { maximumFractionDigits: 0 });
 }
 
-function todayYMD() {
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
-}
-
 function parseMMDDYYYY(str) {
-  // returns Date or null
   if (!str) return null;
   const parts = str.split("/");
   if (parts.length !== 3) return null;
@@ -94,13 +85,12 @@ function parseMMDDYYYY(str) {
         l1.textContent = `Today's date: ${mm}/${dd}/${yyyy}`;
       }
       if (l2) {
-        // time-based event: live ticking clock
         l2.textContent = d.toLocaleTimeString();
       }
     }
 
     updateHeaderClock();
-    setInterval(updateHeaderClock, 1000); // update every second
+    setInterval(updateHeaderClock, 1000);
   } catch (e) {
     console.warn("Header clock error:", e);
   }
@@ -155,10 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const range = document.getElementById("range");
   const rangeOut = document.getElementById("range-slider");
-
   const salary = document.getElementById("salary");
   const salaryOut = document.getElementById("salaryOut");
-
   const priceMin = document.getElementById("priceMin");
   const priceMax = document.getElementById("priceMax");
   const priceOut = document.getElementById("priceOut");
@@ -167,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const reviewPane = document.getElementById("reviewPane");
   const reviewBody = document.getElementById("reviewBody");
   const btnValidate = document.getElementById("btnValidate");
-
   const rememberMe = document.getElementById("rememberMe");
 
   // ===== Cookie + Local Storage + greeting =====
@@ -185,17 +172,15 @@ document.addEventListener("DOMContentLoaded", () => {
     return FORM_STORAGE_PREFIX + encodeURIComponent(firstName.toLowerCase());
   }
 
-  // Build a plain object with NON-secure form values
   function buildFormDataObject() {
     const data = {};
     Array.from(form.elements).forEach(el => {
       if (!el.name) return;
       const type = (el.type || "").toLowerCase();
 
-      // Skip secure / control fields
       if (type === "password" || type === "submit" ||
-        type === "reset" || type === "button" ||
-        el.id === "ssn" || el.id === "medicalId") {
+          type === "reset" || type === "button" ||
+          el.id === "ssn" || el.id === "medicalId") {
         return;
       }
 
@@ -223,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const type = (el.type || "").toLowerCase();
 
       if (type === "password" || el.id === "ssn" || el.id === "medicalId") {
-        return; // never prefill secure fields
+        return;
       }
 
       if (type === "radio") {
@@ -240,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
       el.value = data[el.name];
     });
 
-    // Refresh any derived UI
     try {
       updateRange();
       updateSalary();
@@ -321,14 +305,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (notYouNameSpan) notYouNameSpan.textContent = cookieName;
     if (fname && !fname.value) fname.value = cookieName;
     if (rememberMe) rememberMe.checked = true;
-    // Auto-restore any saved form data
     loadFormFromLocalStorage(cookieName);
   } else {
     if (greetingText) greetingText.textContent = "Welcome new user!";
     if (notYouWrapper) notYouWrapper.style.display = "none";
   }
 
-  // ---- Events for greeting / cookies / local storage ----
   if (notYouCheckbox) {
     notYouCheckbox.addEventListener("change", () => {
       if (notYouCheckbox.checked) {
@@ -347,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (!rememberMe || rememberMe.checked) {
-        setCookie(COOKIE_NAME, firstName, 2);  // 48 hours
+        setCookie(COOKIE_NAME, firstName, 2);
         if (greetingText) {
           greetingText.textContent = `Welcome back, ${firstName}!`;
         }
@@ -366,18 +348,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!firstName) return;
 
       if (!rememberMe.checked) {
-        // user does NOT want to be remembered
         clearStoredFormForName(firstName);
         eraseCookie(COOKIE_NAME);
       } else {
-        // re-enable remembering
         setCookie(COOKIE_NAME, firstName, 2);
         saveFormToLocalStorage();
       }
     });
   }
 
-  // Save non-secure data whenever something changes / loses focus
   form.addEventListener("change", saveFormToLocalStorage);
   form.addEventListener("blur", (evt) => {
     if (evt.target && evt.target.name) {
@@ -409,7 +388,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (priceDisplayValue) priceDisplayValue.textContent = text;
   }
 
-  // expose (in case other scripts need them)
   window.updateRange = updateRange;
   window.updateSalary = updateSalary;
   window.updatePrice = updatePrice;
@@ -505,7 +483,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function validatePasswords() {
     let ok = true;
     if (pw && pw2) {
-      // use HTML5 patterns first
       ok = validateField(pw, null) && validateField(pw2, null) && ok;
 
       if (pw.value && pw2.value && pw.value !== pw2.value) {
@@ -523,13 +500,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!radios.length) return true;
     const anyChecked = Array.from(radios).some(r => r.checked);
     if (!anyChecked) {
-      // show error near first radio if we have a span
-      const first = radios[0];
-      let span = null;
-      // optional: you can add dedicated spans for radio errors if you want
-      if (!span && first && first.parentElement) {
-        // nothing to display now, but we can use alert or console later
-      }
       alert(message);
     }
     return anyChecked;
@@ -557,7 +527,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ok = validateField(userid, userErr) && ok;
 
-    // optional SSN: validate only if provided
     if (ssn && ssn.value.trim() !== "") {
       ok = validateField(ssn, ssnErr) && ok;
     }
@@ -573,7 +542,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return ok;
   }
 
-  // ===== Build review panel =====
   function buildReview() {
     if (!reviewPane || !reviewBody) return;
     reviewBody.innerHTML = "";
@@ -601,22 +569,18 @@ document.addEventListener("DOMContentLoaded", () => {
     add("Move-in Date", moveInDate.value);
     add("User ID", userid.value);
 
-    // illnesses
     const illnessBoxes = form.querySelectorAll("input[name='illness']");
     const selectedIll = Array.from(illnessBoxes)
       .filter(c => c.checked)
       .map(c => c.value);
     add("Past Illnesses", selectedIll.join(", ") || "None");
 
-    // pain
     const pain = form.querySelector("input[name='pain']:checked");
     add("Pain Level", pain ? pain.value : "Not specified");
 
-    // vaccinated
     const vacc = form.querySelector("input[name='vaccinated']:checked");
     add("Vaccinated", vacc ? vacc.value : "Not specified");
 
-    // housing
     const housing = form.querySelector("input[name='housing']:checked");
     add("Housing", housing ? housing.value : "Not specified");
 
@@ -629,14 +593,11 @@ document.addEventListener("DOMContentLoaded", () => {
     reviewPane.hidden = false;
   }
 
-  // ===== VALIDATE button =====
   if (btnValidate) {
     btnValidate.addEventListener("click", (evt) => {
       evt.preventDefault();
       if (validateForm()) {
         buildReview();
-
-        // create submit button only after success
         let realSubmit = form.querySelector("button[type='submit']");
         if (!realSubmit) {
           realSubmit = document.createElement("button");
@@ -657,18 +618,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== Final submit (allow default if valid) =====
   form.addEventListener("submit", (evt) => {
     if (!validateForm()) {
       evt.preventDefault();
       alert("Please correct the errors before submitting.");
     } else {
-      // last chance to save non-secure data
       saveFormToLocalStorage();
     }
   });
 
-  // ===== Reset: also clear cookie/localStorage if needed =====
   form.addEventListener("reset", () => {
     setTimeout(() => {
       clearAllErrors();
