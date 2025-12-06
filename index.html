@@ -1,178 +1,512 @@
 <!DOCTYPE html>
+<!-- 
+Program name: homework3.html
+Author: Bolla Srilakshmi Triveni
+Date created: 10-20-2025
+Date last edited: 12-05-2025
+Version: 3.0
+
+Description: Registration form for a clinic patient portal (Homework 3) 
+with Fetch API, iFrame, fixed header/footer, cookies, localStorage, and time-based event.
+-->
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>SouthCentral Clinic – Patient Form</title>
-<link rel="stylesheet" href="style-1.css">
-<script src="Script1.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SouthCentral Clinic</title>
+  <link rel="stylesheet" href="style-1.css" />
 </head>
 
 <body>
+  <!-- ========= TOP (Header) ========= -->
+  <div id="top">
+    <header>
+      <table>
+        <tr>
+          <td valign="top" align="left" width="20%">
+            <div class="image">
+              <img id="logo" src="cliniclogo.png" alt="SouthCentral Clinic logo" />
+            </div>
+          </td>
 
-<header id="header-bar">
-    <img src="cliniclogo.png" id="logo"/>
-    <h2>SouthCentral Clinic</h2>
+          <td align="center">
+            <h2>SouthCentral Clinic</h2>
 
-    <span id="welcomeUser"></span>
+            <!-- NEW: Dynamic welcome message driven by cookie -->
+            <div id="welcomeMessage" class="welcome-message">
+              <!-- Filled by Script1.js -->
+            </div>
 
-    <!-- REQUIRED FEATURE -->
-    <span id="resetUser"
-          style="margin-left:15px; text-decoration:underline; cursor:pointer; font-size:13px; display:none;">
-        (Not You? Reset)
-    </span>
+            <!-- NEW: "Not Jake? Click here..." control shown only for returning user -->
+            <div id="returningControls" class="returning-controls" hidden>
+              <label>
+                <input type="checkbox" id="notYouToggle" />
+                Not <span id="cookieNameText"></span>? Click HERE to start as a NEW USER.
+              </label>
+            </div>
+          </td>
 
-    <span id="datetime"></span>
-</header>
+          <td valign="top" align="right" width="20%">
+            <!-- NEW: live date/time (time-based event) -->
+            <div id="todayBox">
+              <span id="todayLine1"></span><br />
+              <span id="todayLine2"></span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </header>
+  </div>
 
+  <main>
+    <form id="patientForm" action="thankyou-1.html" novalidate>
+      <table class="form-table">
+        <tr><th colspan="6">Patient Registration Form</th></tr>
 
-<div class="page-container">
+        <!-- ===== Personal Information ===== -->
+        <tr><td colspan="6"><div class="section-tab">Personal Information</div></td></tr>
+        <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
-    <div class="form-title">Patient Registration Form</div>
+        <tr class="row-names">
+          <td class="lbl">
+            <label for="fname"><span class="req">*</span> First Name:</label>
+          </td>
+          <td class="field">
+            <input type="text" id="fname" name="fname" maxlength="30" required
+                   placeholder="please enter your first name"
+                   title="1–30 chars; letters, apostrophes, and dashes only."
+                   pattern="^[A-Za-z'\\-]{1,30}$" />
+            <span class="form-error" id="fnameErr"></span>
+          </td>
 
-<!-- ============================================================================================= -->
-<!-- FORM START -->
-<form id="patientForm">
+          <td class="lbl">
+            <label for="mi">Middle Initial:</label>
+          </td>
+          <td class="field field-mi">
+            <input type="text" id="mi" name="mi" maxlength="1"
+                   aria-label="Middle Initial"
+                   title="Optional: exactly one letter (A–Z) or blank."
+                   pattern="^[A-Za-z]?$" />
+            <span class="form-error" id="miErr"></span>
+          </td>
 
-<!-- PERSONAL -->
-<div class="section">
-<h3>Personal Information</h3>
+          <td class="lbl">
+            <label for="lname"><span class="req">*</span> Last Name:</label>
+          </td>
+          <td class="field">
+            <input type="text" id="lname" name="lname" maxlength="30" required
+                   placeholder="please enter your last name"
+                   title="1–30 chars; letters, apostrophes, and dashes only."
+                   pattern="^[A-Za-z'-]{1,30}$" />
+            <span class="form-error" id="lnameErr"></span>
+          </td>
+        </tr>
 
-<label>* First Name: <input type="text" id="fname" required></label>
-<label>Middle Initial: <input type="text" id="mname"></label>
-<label>* Last Name: <input type="text" id="lname" required></label>
+        <!-- NEW: Remember Me checkbox (for cookie + localStorage) -->
+        <tr>
+          <td class="lbl">
+            <label for="rememberMe">Remember Me:</label>
+          </td>
+          <td class="field" colspan="5">
+            <input type="checkbox" id="rememberMe" name="rememberMe" checked />
+            <span class="hint">
+              Keep my name and non-secure form values on this device for 48 hours.
+            </span>
+          </td>
+        </tr>
 
-<label>* Date of Birth: <input type="text" id="dob" placeholder="MM/DD/YYYY" required></label>
-<label>Social Security Number (optional): <input type="text" id="ssn"></label>
+        <!-- ===== Dates ===== -->
+        <tr>
+          <td><label for="dob"><span class="req">*</span> Date of Birth:</label></td>
+          <td colspan="5">
+            <input type="text" id="dob" name="dob" required
+                   placeholder="MM/DD/YYYY"
+                   title="Birthday cannot be in the future or 120+ years ago. Format: MM/DD/YYYY"
+                   pattern="^(0[1-9]|1[0-2])\\/(0[1-9]|[12][0-9]|3[01])\\/((19|20)\\d{2})$"
+                   data-min="01/01/1900"
+                   data-max="12/31/2100" />
+            <span class="form-error" id="dobErr"></span>
+          </td>
+        </tr>
 
-<label><input type="checkbox" id="rememberMe" checked> Remember me on this device</label>
-</div>
+        <tr>
+          <td><label for="ssn">Social Security Number (optional):</label></td>
+          <td colspan="5">
+            <input type="password" id="ssn" name="ssn" inputmode="numeric"
+                   autocomplete="off" placeholder="123-45-6789" maxlength="11"
+                   pattern="[0-9]{3}-?[0-9]{2}-?[0-9]{4}"
+                   title="Enter 9 digits (123456789) or with dashes (123-45-6789)" />
+            <span class="form-error" id="ssnErr"></span>
+            <span class="form-note" id="ssnConfirm" hidden></span>
+            <button type="button" id="ssnYes" class="btn-sm" hidden>Yes</button>
+            <button type="button" id="ssnNo"  class="btn-sm alt" hidden>No</button>
+            <button type="button" id="ssnEdit" class="linklike" hidden>Edit</button>
+          </td>
+        </tr>
 
-<hr>
+        <!-- ===== Contact Information ===== -->
+        <tr><td colspan="6"><div class="section-tab">Contact Information</div></td></tr>
+        <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
-<!-- CONTACT -->
-<div class="section">
-<h3>Contact Information</h3>
-<label>* Email: <input type="email" id="email" required></label>
-<label>* Phone Number: <input type="text" id="phone" placeholder="000-000-0000" required></label>
-<label>* Medical ID Number: <input type="text" id="mid" required></label>
-</div>
+        <tr>
+          <td><label for="email"><span class="req">*</span> Email:</label></td>
+          <td colspan="5">
+            <input type="email" id="email" name="email" required
+                   placeholder="name@domain.tld"
+                   title="Use a valid email, e.g., name@domain.tld"
+                   pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$" />
+            <span class="form-error" id="emailErr"></span>
+          </td>
+        </tr>
 
-<hr>
+        <tr>
+          <td><label for="phone"><span class="req">*</span> Phone Number:</label></td>
+          <td colspan="12">
+            <input type="text" id="phone" name="phone" required
+                   pattern="^[0-9]{3}-[0-9]{3}-[0-9]{4}$"
+                   title="Phone must be in format 000-000-0000 (10 digits with dashes)"
+                   placeholder="000-000-0000" />
+            <span class="form-error" id="phoneErr"></span>
+          </td>
+        </tr>
 
-<!-- ADDRESS -->
-<div class="section">
-<h3>Address</h3>
-<label>* Address Line 1: <input type="text" id="addr1" required></label>
-<label>Address Line 2: <input type="text" id="addr2"></label>
-<label>* City: <input type="text" id="city" required></label>
-<label>* State: <select id="state" required></select></label>
-<label>* Zip Code: <input type="text" id="zip" required></label>
-</div>
+        <tr>
+          <td>
+            <label for="medicalId" title="Required medical ID number.">
+              <span class="req">*</span> Medical ID Number:
+            </label>
+          </td>
+          <td colspan="5">
+            <input type="password" id="medicalId" name="medicalId" required
+                   placeholder="Enter your medical ID"
+                   title="Medical identification number (5–20 letters or numbers)"
+                   pattern="^[A-Za-z0-9]{5,20}$" />
+            <span class="form-error" id="medicalIdErr"></span>
+          </td>
+        </tr>
 
-<hr>
+        <!-- ===== Address ===== -->
+        <tr><td colspan="6"><div class="section-tab">Address</div></td></tr>
+        <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
-<!-- TRAVEL -->
-<div class="section">
-<h3>Travel & Move-In Information</h3>
-<label>Travel Date: <input type="text" id="travel" placeholder="MM/DD/YYYY"></label>
-<label>Move-In Date: <input type="text" id="move" placeholder="MM/DD/YYYY"></label>
-</div>
+        <tr>
+          <td><label for="address1"><span class="req">*</span> Address Line 1:</label></td>
+          <td colspan="5">
+            <input type="text" id="address1" name="address1" maxlength="30" required
+                   placeholder="1234 Main Street" title="Required: 2–30 characters"
+                   pattern="^.{2,30}$" />
+            <span class="form-error" id="addr1Err"></span>
+          </td>
+        </tr>
 
-<hr>
+        <tr>
+          <td><label for="address2">Address Line 2:</label></td>
+          <td colspan="5">
+            <input type="text" id="address2" name="address2" maxlength="30"
+                   placeholder="Apt / Suite / Unit"
+                   title="Optional: if entered, must be 2–30 characters"
+                   pattern="^$|^.{2,30}$" />
+            <span class="form-error" id="addr2Err"></span>
+          </td>
+        </tr>
 
-<!-- HEALTH -->
-<div class="section">
-<h3>Health Information</h3>
+        <tr class="row-csz">
+          <td><label for="city"><span class="req">*</span> City:</label></td>
+          <td>
+            <input type="text" id="city" name="city" maxlength="30" required
+                   placeholder="City name" title="Required: 2–30 characters"
+                   pattern="^.{2,30}$" />
+            <span class="form-error" id="cityErr"></span>
+          </td>
 
-<p>Past Illnesses (check all that apply):</p>
-<label><input type="checkbox" class="ill" value="Chicken Pox"> Chicken Pox</label>
-<label><input type="checkbox" class="ill" value="Measles"> Measles</label>
-<label><input type="checkbox" class="ill" value="Mumps"> Mumps</label>
-<label><input type="checkbox" class="ill" value="Heart Disease"> Heart Disease</label>
-<label><input type="checkbox" class="ill" value="Covid-19"> Covid-19</label>
-<label><input type="checkbox" class="ill" value="Diabetic"> Diabetic</label>
+          <td class="lbl-tight">
+            <label for="state"><span class="req">*</span> State:</label>
+          </td>
+          <td class="field-tight">
+            <!-- Options will be loaded by Fetch API (states.json) -->
+            <select id="state" name="state" required
+                    title="Select your state (2-letter code saved).">
+              <option value="">-- Select State --</option>
+            </select>
+            <span class="form-error" id="stateErr"></span>
+          </td>
 
-<br>
+          <td class="lbl-tight">
+            <label for="zip"><span class="req">*</span> Zip Code:</label>
+          </td>
+          <td class="field-tight">
+            <input type="text" id="zip" name="zip" required
+                   placeholder="12345"
+                   title="5 digits required (12345)."
+                   pattern="^\\d{5}$" />
+            <span class="form-error" id="zipErr"></span>
+          </td>
+        </tr>
 
-<label>How is your health? (1-10) — Current: <span id="healthValue">5</span></label>
-<input type="range" id="health" min="1" max="10" value="5">
+        <!-- ===== Travel & Move-In Information ===== -->
+        <tr><td colspan="6"><div class="section-tab">Travel & Move-in Information</div></td></tr>
+        <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
-<p>Level of Pain:</p>
-<label><input type="radio" name="pain" value="Mild"> Mild</label>
-<label><input type="radio" name="pain" value="Moderate"> Moderate</label>
-<label><input type="radio" name="pain" value="Severe"> Severe</label>
+        <tr>
+          <td><label for="travelDate"><span class="req">*</span> Travel Date:</label></td>
+          <td colspan="5">
+            <input type="text" id="travelDate" name="travelDate" required
+                   placeholder="MM/DD/YYYY"
+                   title="Travel date must be after today. Format: MM/DD/YYYY"
+                   pattern="^(0[1-9]|1[0-2])\\/(0[1-9]|[12][0-9]|3[01])\\/((19|20)\\d{2})$"
+                   data-min="01/01/2020"
+                   data-max="12/31/2100" />
+            <span class="form-error" id="travelDateErr"></span>
+          </td>
+        </tr>
 
-<p>Have you been vaccinated?</p>
-<label><input type="radio" name="vax" value="Yes"> Yes</label>
-<label><input type="radio" name="vax" value="No"> No</label>
-<label><input type="radio" name="vax" value="Unsure"> Unsure</label>
-</div>
+        <tr>
+          <td><label for="moveInDate"><span class="req">*</span> Move-in Date:</label></td>
+          <td colspan="5">
+            <input type="text" id="moveInDate" name="moveInDate" required
+                   placeholder="MM/DD/YYYY"
+                   title="Move-in date must be after today. Format: MM/DD/YYYY"
+                   pattern="^(0[1-9]|1[0-2])\\/(0[1-9]|[12][0-9]|3[01])\\/((19|20)\\d{2})$"
+                   data-min="01/01/2020"
+                   data-max="12/31/2100" />
+            <span class="form-error" id="moveInDateErr"></span>
+          </td>
+        </tr>
 
-<hr>
+        <!-- ===== Health Information ===== -->
+        <tr><td colspan="6"><div class="section-tab">Health Information</div></td></tr>
+        <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
-<!-- OTHER INFORMATION -->
-<div class="section">
-<h3>Other Information</h3>
+        <tr>
+          <td><label>Past Illnesses (check all that apply):</label></td>
+          <td colspan="5">
+            <!-- NOTE: these checkboxes can be left in HTML;
+                 localStorage will remember them per user. -->
+            <div class="checkbox-group" id="illnessGroup">
+              <label><input type="checkbox" name="illness" value="Chicken Pox" /> Chicken Pox</label>
+              <label><input type="checkbox" name="illness" value="Measles" /> Measles</label>
+              <label><input type="checkbox" name="illness" value="Mumps" /> Mumps</label>
+              <label><input type="checkbox" name="illness" value="Heart Disease" /> Heart Disease</label>
+              <label><input type="checkbox" name="illness" value="Diabetic" /> Diabetic</label>
+              <label><input type="checkbox" name="illness" value="Covid-19" /> Covid-19</label>
+            </div>
+          </td>
+        </tr>
 
-<p>* Housing:</p>
-<label><input type="radio" name="house" value="Own"> Own</label>
-<label><input type="radio" name="house" value="Rent"> Rent</label>
-<label><input type="radio" name="house" value="Unsure"> Unsure</label>
+        <tr>
+          <td class="td-right">
+            <label for="range" title="1=poor, 10=excellent.">
+              How is your health? (1–10) (optional)
+            </label>
+          </td>
+          <td colspan="5">
+            <input type="range" id="range" name="range" min="1" max="10" value="5"
+                   title="Select your overall health rating: 1 (poor) to 10 (excellent)" />
+            <span id="range-slider" aria-live="polite"></span>
+          </td>
+        </tr>
 
-<br><br>
+        <tr>
+          <td><label>Level of Pain:</label></td>
+          <td colspan="5" title="Select your current level of pain">
+            <label><input type="radio" name="pain" value="MILD"> Mild</label>
+            <label><input type="radio" name="pain" value="MODERATE"> Moderate</label>
+            <label><input type="radio" name="pain" value="SEVERE"> Severe</label>
+          </td>
+        </tr>
 
-<label>$ Salary (year): <span id="salaryValue">$60,000</span></label>
-<input type="range" id="salary" min="20000" max="200000" value="60000">
+        <tr>
+          <td><label>Have you been vaccinated?</label></td>
+          <td>
+            <input type="radio" id="vaccYes" name="vaccinated" value="Yes" required
+                   title="Select Yes if vaccinated.">
+            <label for="vaccYes">Yes</label>
 
-<br>
+            <input type="radio" id="vaccNo" name="vaccinated" value="No"
+                   title="Select No if not vaccinated.">
+            <label for="vaccNo">No</label>
 
-<label>Home Price Range:</label>
-<label>Min <input type="range" id="minPrice" min="100000" max="500000" value="200000"></label>
-<label>Max <input type="range" id="maxPrice" min="300000" max="900000" value="600000"></label>
+            <input type="radio" id="vaccUnsure" name="vaccinated" value="Unsure"
+                   title="Select Unsure if not certain.">
+            <label for="vaccUnsure">Unsure</label>
+          </td>
+        </tr>
 
-<label>Price Range Summary:<input type="text" id="priceRange" readonly></label>
+        <!-- ===== Other Information ===== -->
+        <tr><td colspan="6"><div class="section-tab">Other Information</div></td></tr>
+        <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
-<br>
+        <tr>
+          <td><label><span class="req">*</span> Housing:</label></td>
+          <td colspan="5" title="Select one: Own, Rent, or Unsure.">
+            <label><input type="radio" name="housing" value="Own" required /> Own</label>
+            <label><input type="radio" name="housing" value="Rent" /> Rent</label>
+            <label><input type="radio" name="housing" value="Unsure" /> Unsure</label>
+          </td>
+        </tr>
 
-<label>Described Symptoms (optional):</label>
-<textarea id="symptoms"></textarea>
+        <tr>
+          <td class="td-right">
+            <label for="salary" title="Desired salary per year.">$ Salary (year):</label>
+          </td>
+          <td colspan="5">
+            <input type="range" id="salary" name="salary" min="20000" max="200000" step="1000"
+                   value="60000" title="Drag to set desired annual salary" />
+            <span id="salaryOut" class="money" aria-live="polite"></span>
+          </td>
+        </tr>
 
-<label>Other notes (optional):</label>
-<textarea id="notes"></textarea>
-</div>
+        <tr>
+          <td class="td-right">
+            <label for="priceMin" title="Price range you would pay for a home.">
+              Home price range:
+            </label>
+          </td>
+          <td colspan="5" class="price-range-row">
+            <div class="range-group">
+              <span class="tiny">Min</span>
+              <input type="range" id="priceMin" name="priceMin" min="50000" max="1000000"
+                     step="5000" value="200000"
+                     title="Set the minimum home price you’d consider" />
+            </div>
 
-<hr>
+            <div class="range-group">
+              <span class="tiny">Max</span>
+              <input type="range" id="priceMax" name="priceMax" min="50000" max="1000000"
+                     step="5000" value="600000"
+                     title="Set the maximum home price you’d consider" />
+            </div>
 
-<!-- ACCOUNT -->
-<div class="section">
-<h3>Account Creation Details</h3>
+            <span id="priceOut" class="money" aria-live="polite"></span>
+          </td>
+        </tr>
 
-<label>* Desired User ID: <input type="text" id="uid"></label>
-<label>* Password: <input type="password" id="pass" required></label>
-<label>* Re-enter Password: <input type="password" id="repass" required></label>
-</div>
+        <tr>
+          <td class="td-right"><label>Price Range:</label></td>
+          <td colspan="5">
+            <div class="price-display">
+              <div class="price-display-title">Price Range</div>
+              <div id="priceDisplayValue" class="price-display-value"></div>
+            </div>
+          </td>
+        </tr>
 
-<button id="submitBtn">SUBMIT FORM</button>
+        <tr>
+          <td>
+            <label for="symptoms"
+                   title="Briefly describe your current symptoms. Avoid quotes and &lt; &gt; characters.">
+              Described Symptoms (optional):
+            </label>
+          </td>
+          <td colspan="5">
+            <textarea id="symptoms" name="symptoms" rows="3" cols="50"
+                      title="Describe symptoms; avoid double quotes and &lt; &gt;."
+                      pattern='^[^"<>]*$'></textarea>
+          </td>
+        </tr>
 
-</form>
-<!-- FORM END -->
+        <tr>
+          <td>
+            <label for="otherNotes" title="Optional; avoid double quotes (&quot;).">
+              Other notes (optional):
+            </label>
+          </td>
+          <td colspan="5">
+            <textarea id="otherNotes" name="otherNotes" rows="3" cols="50"
+                      title="Optional; avoid double quotes (&quot;)."
+                      pattern='^[^"]*$'></textarea>
+          </td>
+        </tr>
 
-<br><br>
+        <!-- ===== Account Creation ===== -->
+        <tr><td colspan="6"><div class="section-tab">Account Creation Details</div></td></tr>
+        <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
-<!-- FETCH API -->
-<div id="tips-box">
-    <h3>Health Tips (Loaded via Fetch API)</h3>
-    <ul id="tipsList"></ul>
-</div>
+        <tr>
+          <td class="td-right">
+            <label for="userid"><span class="req">*</span> Desired User ID:</label>
+          </td>
+          <td colspan="5">
+            <input type="text" id="userid" name="userid" maxlength="20" required
+                   placeholder="Enter your desired user ID"
+                   title="5–20 characters. Start with a letter. Only letters, numbers, underscore (_), and dash (-). No spaces. We will convert it to lowercase."
+                   pattern="^(?!\\d)[A-Za-z0-9_-]{5,20}$" />
+            <span class="form-error" id="userErr"></span>
+          </td>
+        </tr>
 
-<!-- IFRAME -->
-<div id="iframeBlock">
-    <h3>Helpful Medical Resource</h3>
-    <iframe src="https://www.cdc.gov" loading="lazy"></iframe>
-</div>
+        <tr>
+          <td><label for="pw"><span class="req">*</span> Password:</label></td>
+          <td>
+            <input type="password" id="pw" name="pw" required
+                   placeholder="Enter password"
+                   title="8–30 chars; include upper, lower, digit, special (!@#%^&*()_+=-/><.,~`); no double quotes; cannot contain your user id, first, or last name."
+                   pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#%^&*()_+=\\-\\/><.,~`])[A-Za-z\\d!@#%^&*()_+=\\-\\/><.,~`]{8,30}$" />
+          </td>
 
-</div>
+          <td><label for="pw2" class="padR"><span class="req">*</span> Re-enter Password:</label></td>
+          <td>
+            <input type="password" id="pw2" name="pw2" required
+                   placeholder="Re-enter password"
+                   title="Must match the first password exactly."
+                   pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#%^&*()_+=\\-\\/><.,~`])[A-Za-z\\d!@#%^&*()_+=\\-\\/><.,~`]{8,30}$" />
+            <span class="form-error" id="pwErr"></span>
+          </td>
+          <td colspan="2"></td>
+        </tr>
 
-<footer id="footer-bar">SouthCentral Clinic ©2025 | CONTACT US</footer>
+        <!-- Buttons -->
+        <tr>
+          <td colspan="6" class="actions-row">
+            <input type="reset" value="CLEAR AND START OVER" />
+            <button type="button" id="btnValidate" class="btn-review">VALIDATE</button>
+            <!-- Real SUBMIT button is created only when there are NO errors -->
+          </td>
+        </tr>
+      </table>
+
+      <!-- Right-side review pane -->
+      <div id="reviewPane" role="region" aria-live="polite"
+           aria-labelledby="reviewTitle" hidden>
+        <h3 id="reviewTitle">PLEASE REVIEW THIS INFORMATION</h3>
+        <div id="reviewBody" class="review-body"></div>
+      </div>
+    </form>
+
+    <!-- NEW: iFRAME section in BODY -->
+    <section id="infoFrameSection">
+      <h3>Helpful Resources (iFrame Example)</h3>
+      <p class="frame-caption">
+        This iFrame loads external content that you can click on (for example, W3Schools).
+      </p>
+      <iframe id="infoFrame"
+              src="https://www.w3schools.com"
+              title="External resource in an iFrame"
+              loading="lazy">
+      </iframe>
+    </section>
+  </main>
+
+  <footer id="page-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">SouthCentral Clinic</span>
+      <span class="footer-sep">|</span>
+      <a class="footer-btn" href="https://scrmc.com/" target="_blank" rel="noopener">
+        CONTACT US
+      </a>
+      <span class="footer-sep">|</span>
+      <a class="footer-link" href="https://facebook.com" target="_blank" rel="noopener">
+        FB
+      </a>
+      <span class="footer-sep">|</span>
+      <span class="footer-address">
+        Address: 16360 Park Ten Pl, Houston, TX 77084
+      </span>
+    </div>
+  </footer>
+
+  <!-- JS (states now loaded via Fetch inside Script1.js) -->
+  <script src="Script1.js"></script>
 </body>
 </html>
