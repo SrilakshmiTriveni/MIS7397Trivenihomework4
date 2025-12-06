@@ -109,7 +109,7 @@ main {
 }
 /* push First Name group slightly right */
 .row-names td:first-child {
-  padding-left: 40px;   /* tweak this value if needed */
+  padding-left: 80px;   /* tweak this value if needed */
 }
 /* Section titles */
 .section-tab {
