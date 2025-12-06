@@ -2,82 +2,53 @@
 Program name: states.js
 Author: Bolla Srilakshmi Triveni
 Date created: 10-20-2025
-Date last edited: 10-24-2025
-Version: 2.6
-Description: External state dropdown data with all 50 states, DC, and Puerto Rico - 2-letter codes only
+Date last edited: 12-05-2025
+Version: 3.0
+Description: Load state dropdown from an external JSON file using Fetch API.
 */
 
-document.addEventListener('DOMContentLoaded', function() {
-  const stateSelect = document.getElementById('state');
+document.addEventListener("DOMContentLoaded", async function () {
+  const stateSelect = document.getElementById("state");
   if (!stateSelect) return;
 
+  // keep the first option, remove the rest
   while (stateSelect.options.length > 1) {
     stateSelect.remove(1);
   }
 
-  const states = [
-    {code: "AL", name: "Alabama"},
-    {code: "AK", name: "Alaska"},
-    {code: "AZ", name: "Arizona"},
-    {code: "AR", name: "Arkansas"},
-    {code: "CA", name: "California"},
-    {code: "CO", name: "Colorado"},
-    {code: "CT", name: "Connecticut"},
-    {code: "DE", name: "Delaware"},
-    {code: "DC", name: "District of Columbia"},
-    {code: "FL", name: "Florida"},
-    {code: "GA", name: "Georgia"},
-    {code: "HI", name: "Hawaii"},
-    {code: "ID", name: "Idaho"},
-    {code: "IL", name: "Illinois"},
-    {code: "IN", name: "Indiana"},
-    {code: "IA", name: "Iowa"},
-    {code: "KS", name: "Kansas"},
-    {code: "KY", name: "Kentucky"},
-    {code: "LA", name: "Louisiana"},
-    {code: "ME", name: "Maine"},
-    {code: "MD", name: "Maryland"},
-    {code: "MA", name: "Massachusetts"},
-    {code: "MI", name: "Michigan"},
-    {code: "MN", name: "Minnesota"},
-    {code: "MS", name: "Mississippi"},
-    {code: "MO", name: "Missouri"},
-    {code: "MT", name: "Montana"},
-    {code: "NE", name: "Nebraska"},
-    {code: "NV", name: "Nevada"},
-    {code: "NH", name: "New Hampshire"},
-    {code: "NJ", name: "New Jersey"},
-    {code: "NM", name: "New Mexico"},
-    {code: "NY", name: "New York"},
-    {code: "NC", name: "North Carolina"},
-    {code: "ND", name: "North Dakota"},
-    {code: "OH", name: "Ohio"},
-    {code: "OK", name: "Oklahoma"},
-    {code: "OR", name: "Oregon"},
-    {code: "PA", name: "Pennsylvania"},
-    {code: "RI", name: "Rhode Island"},
-    {code: "SC", name: "South Carolina"},
-    {code: "SD", name: "South Dakota"},
-    {code: "TN", name: "Tennessee"},
-    {code: "TX", name: "Texas"},
-    {code: "UT", name: "Utah"},
-    {code: "VT", name: "Vermont"},
-    {code: "VA", name: "Virginia"},
-    {code: "WA", name: "Washington"},
-    {code: "WV", name: "West Virginia"},
-    {code: "WI", name: "Wisconsin"},
-    {code: "WY", name: "Wyoming"},
-    {code: "PR", name: "Puerto Rico"}
-  ];
+  try {
+    // Fetch list from external file (same folder as this JS)
+    const response = await fetch("states-data.json");
+    if (!response.ok) {
+      throw new Error("HTTP error " + response.status);
+    }
 
-  states.sort((a, b) => a.name.localeCompare(b.name));
+    const states = await response.json();  // expects an array of { code, name }
+    states.sort((a, b) => a.name.localeCompare(b.name));
 
-  states.forEach(state => {
-    const option = document.createElement('option');
-    option.value = state.code;
-    option.textContent = state.name;
-    stateSelect.appendChild(option);
-  });
+    states.forEach(state => {
+      const option = document.createElement("option");
+      option.value = state.code;
+      option.textContent = state.name;
+      stateSelect.appendChild(option);
+    });
 
-  console.log('States dropdown loaded successfully with ' + states.length + ' options. Using 2-letter codes only.');
+    console.log("States loaded via Fetch:", states.length);
+  } catch (err) {
+    console.error("Error loading states via Fetch:", err);
+
+    // Graceful fallback – minimal list so form still works
+    const fallbackStates = [
+      { code: "TX", name: "Texas" },
+      { code: "CA", name: "California" },
+      { code: "NY", name: "New York" }
+    ];
+
+    fallbackStates.forEach(state => {
+      const option = document.createElement("option");
+      option.value = state.code;
+      option.textContent = state.name;
+      stateSelect.appendChild(option);
+    });
+  }
 });
