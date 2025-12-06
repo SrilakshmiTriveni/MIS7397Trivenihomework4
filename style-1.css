@@ -381,7 +381,25 @@ input[type="reset"] {
     margin-top: 0;
   }
 }
+/* Make first column labels behave like the old version */
+.form-table tr > td:first-child {
+  text-align: right;
+  width: 230px;             /* this lines First Name up above Date of Birth */
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
 
+/* Prevent label cells from wrapping (First / Middle / Last row, etc.) */
+.row-names td.lbl,
+.row-csz .lbl-tight,
+.form-table .lbl {
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
 @media (max-width: 600px) {
   .lbl,
   .td-right {
