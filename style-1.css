@@ -85,6 +85,28 @@ main {
   padding: 6px 8px;
   vertical-align: top;
 }
+/* First / Middle / Last name row alignment */
+#fname,
+#lname {
+  width: 230px;
+}
+
+#mi {
+  width: 60px;
+  text-align: center;
+}
+
+/* extra spacing + label width so the first name is centered nicely */
+.row-names td {
+  padding: 5px 10px;
+}
+
+.row-names label {
+  width: 150px;
+  display: inline-block;
+  text-align: right;
+  margin-right: 8px;
+}
 
 /* Section titles */
 .section-tab {
