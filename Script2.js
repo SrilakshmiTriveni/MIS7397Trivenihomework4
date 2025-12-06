@@ -1,84 +1,79 @@
-/* CLOCK */
-function updateClock(){
-    document.getElementById("datetime").textContent=new Date().toLocaleString();
-}
-setInterval(updateClock,1000);updateClock();
+/*
+Program name: Script1.js
+Author: Bolla Srilakshmi Triveni
+Date created: 10-20-2025
+Date last edited: 12-05-2025
+Version: 3.0
+Description: Validation + review for homework3.html
+             + live clock, cookies, and localStorage.
+*/
 
-/* COOKIE FUNCTIONS */
-function setCookie(name,val,days){
-    let d=new Date();
-    d.setTime(d.getTime()+days*24*60*60*1000);
-    document.cookie=name+"="+val+";expires="+d.toUTCString()+";path=/";
-}
-function getCookie(name){
-    let key=name+"=";
-    return document.cookie.split("; ")
-    .find(r=>r.startsWith(key))?.split("=")[1];
-}
+// ===== Cookie / storage constants =====
+const COOKIE_NAME = "scClinicFirstName";
+const FORM_STORAGE_PREFIX = "scClinicForm_";
 
-let user=getCookie("fname");
-
-/* WELCOME */
-if(user){
-    welcomeUser.innerHTML="Welcome back, "+user;
-    resetUser.style.display="inline";
-}else{
-    welcomeUser.innerHTML="Welcome New User!";
-}
-
-/* RESET USER */
-resetUser.onclick=function(){
-    localStorage.clear();
-    document.cookie="fname=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-    alert("User cleared — starting new session.");
-    location.reload();
-};
-
-/* SAVE INPUTS */
-document.querySelectorAll("input,select,textarea")
-.forEach(el=>el.addEventListener("change",()=>localStorage.setItem(el.id,el.value)));
-
-/* LOAD SAVED SESSION */
-if(user){
-    document.querySelectorAll("input,select,textarea").forEach(el=>{
-        if(localStorage.getItem(el.id)) el.value=localStorage.getItem(el.id);
-    });
+// ----- Simple cookie helpers -----
+function setCookie(name, value, days) {
+  try {
+    const d = new Date();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = name + "=" + encodeURIComponent(value) + ";" +
+                      expires + ";path=/";
+  } catch (e) {
+    console.warn("Unable to set cookie:", e);
+  }
 }
 
-/* SUBMIT ACTION */
-patientForm.onsubmit=function(e){
-    e.preventDefault();
-    setCookie("fname",fname.value,2); // 48 Hrs
+function getCookie(name) {
+  try {
+    const cname = name + "=";
+    const decoded = decodeURIComponent(document.cookie || "");
+    const parts = decoded.split(";");
+    for (let part of parts) {
+      part = part.trim();
+      if (part.indexOf(cname) === 0) {
+        return part.substring(cname.length);
+      }
+    }
+  } catch (e) {
+    console.warn("Unable to read cookie:", e);
+  }
+  return "";
+}
 
-    if(!rememberMe.checked){
-        localStorage.clear();
-        document.cookie="fname=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+function eraseCookie(name) {
+  try {
+    document.cookie = name +
+      "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
+  } catch (e) {
+    console.warn("Unable to erase cookie:", e);
+  }
+}
+
+// ===== Header date/time – live clock =====
+(function () {
+  try {
+    const l1 = document.getElementById("todayLine1");
+    const l2 = document.getElementById("todayLine2");
+
+    function updateHeaderClock() {
+      const d = new Date();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      if (l1) {
+        l1.textContent = `Today's date: ${mm}/${dd}/${yyyy}`;
+      }
+      if (l2) {
+        // time-based event: live ticking clock
+        l2.textContent = d.toLocaleTimeString();
+      }
     }
 
-    window.location.href="thankyou-1.html";
-};
-
-/* SLIDERS */
-health.oninput=()=>healthValue.textContent=health.value;
-
-salary.oninput=()=>salaryValue.textContent="$"+Number(salary.value).toLocaleString();
-
-function updatePrice(){
-    priceRange.value="$"+Number(minPrice.value).toLocaleString()
-    +" – $"+Number(maxPrice.value).toLocaleString();
-}
-minPrice.oninput=updatePrice;
-maxPrice.oninput=updatePrice;
-updatePrice();
-
-/* FETCH STATES */
-fetch("states.json").then(r=>r.json()).then(data=>{
-    data.forEach(s=>{state.innerHTML+=`<option>${s}</option>`});
-});
-
-/* FETCH TIPS */
-fetch("health-tips.txt")
-.then(r=>r.text())
-.then(t=>t.split("\n").forEach(
-    tip=>tipsList.innerHTML+=`<li>${tip}</li>`
-));
+    updateHeaderClock();
+    setInterval(updateHeaderClock, 1000); // update every second
+  } catch (e) {
+    console.warn("Header clock error:", e);
+  }
+})();
