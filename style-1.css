@@ -54,7 +54,7 @@ main{ flex:1; padding:20px 0 40px 0; }
    MAKE ALL LABELS + SECTION HEADINGS BOLD
 ========================================================== */
 label, .lbl, .form-table td label {
-  font-weight:900 !important;
+  font-weight:600 !important;
   font-size:15px;
   color:#000;
 }
@@ -69,7 +69,7 @@ label, .lbl, .form-table td label {
 
 /* Section headers */
 h2, h3, h4, .sectionTitle {
-  font-weight:900 !important;
+  font-weight:600 !important;
   font-size:19px;
   color:#166534;
 }
