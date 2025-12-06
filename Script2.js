@@ -96,10 +96,96 @@ function parseMMDDYYYY(str) {
   }
 })();
 
+// ===== UI helpers: inject greeting + Remember Me so HTML doesn't change =====
+function ensureGreetingUI() {
+  const headerCenter = document.querySelector("#top header table tr td:nth-child(2)");
+  if (!headerCenter) return;
+
+  if (document.getElementById("greetingText")) return;
+
+  const welcomeBox = document.createElement("div");
+  welcomeBox.id = "welcomeBox";
+  welcomeBox.style.fontSize = "0.9rem";
+
+  const greetingSpan = document.createElement("span");
+  greetingSpan.id = "greetingText";
+  greetingSpan.textContent = "Welcome new user!";
+  welcomeBox.appendChild(greetingSpan);
+
+  const notYouLabel = document.createElement("label");
+  notYouLabel.id = "notYouWrapper";
+  notYouLabel.style.display = "none";
+  notYouLabel.style.marginLeft = "8px";
+  notYouLabel.style.fontSize = "0.85rem";
+
+  const notYouCheckbox = document.createElement("input");
+  notYouCheckbox.type = "checkbox";
+  notYouCheckbox.id = "notYouCheckbox";
+  notYouCheckbox.style.marginRight = "4px";
+
+  notYouLabel.appendChild(notYouCheckbox);
+  notYouLabel.appendChild(document.createTextNode("Not "));
+  const notYouNameSpan = document.createElement("span");
+  notYouNameSpan.id = "notYouName";
+  notYouLabel.appendChild(notYouNameSpan);
+  notYouLabel.appendChild(
+    document.createTextNode("? Click here to start as a NEW USER.")
+  );
+
+  welcomeBox.appendChild(notYouLabel);
+  headerCenter.appendChild(welcomeBox);
+}
+
+function ensureRememberCheckbox(form) {
+  if (document.getElementById("rememberMe")) return;
+
+  const table = form.querySelector("table.form-table");
+  if (!table) return;
+
+  const tbody = table.tBodies[0] || table;
+  const actionsCell = tbody.querySelector("td.actions-row");
+  const actionsRow = actionsCell ? actionsCell.parentElement : null;
+
+  const row = document.createElement("tr");
+  const cellLabel = document.createElement("td");
+  const cellControl = document.createElement("td");
+  cellControl.colSpan = 5;
+
+  const label = document.createElement("label");
+  label.className = "remember-me-label";
+
+  const cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.id = "rememberMe";
+  cb.name = "rememberMe";
+  cb.checked = true;
+
+  label.appendChild(cb);
+  label.appendChild(
+    document.createTextNode(
+      " Remember me on this device for up to 48 hours (first name + non-secure form details)."
+    )
+  );
+
+  cellControl.appendChild(label);
+  row.appendChild(cellLabel);
+  row.appendChild(cellControl);
+
+  if (actionsRow && actionsRow.parentNode === tbody) {
+    tbody.insertBefore(row, actionsRow);
+  } else {
+    tbody.appendChild(row);
+  }
+}
+
 // ===================== MAIN =====================
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("patientForm");
   if (!form) return;
+
+  // Make sure greeting + Remember Me exist (added dynamically)
+  ensureGreetingUI();
+  ensureRememberCheckbox(form);
 
   // ---- Grab elements ----
   const fname = document.getElementById("fname");
