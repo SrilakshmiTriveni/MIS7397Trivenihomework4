@@ -497,24 +497,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Medical ID =====
   const validateMedicalId = () => {
-    const value = preventHTMLTags(medicalId.value.trim());
-    medicalId.value = value;
-    if (!value) {
-      medicalId.setCustomValidity("Medical ID is required.");
-      medicalIdErr.textContent = "Medical ID is required.";
-      return false;
-    }
-    if (!/^[A-Za-z0-9]{5,20}$/.test(value)) {
-      medicalId.setCustomValidity("Medical ID must be 5-20 alphanumeric characters.");
-      medicalIdErr.textContent = "Must be 5-20 letters/numbers.";
-      return false;
-    }
-    medicalId.setCustomValidity("");
-    medicalIdErr.textContent = "";
-    return true;
-  };
-  medicalId.addEventListener("input", validateMedicalId);
-  medicalId.addEventListener("blur", validateMedicalId);
+  // allow only letters/numbers and hard-limit to 20 chars
+  let value = medicalId.value.replace(/[^A-Za-z0-9]/g, "");
+  value = value.slice(0, 20);          // max 20 characters
+  medicalId.value = value;
+
+  if (!value) {
+    medicalId.setCustomValidity("Medical ID is required.");
+    medicalIdErr.textContent = "Medical ID is required.";
+    return false;
+  }
+
+  if (value.length < 5 || value.length > 20) {
+    medicalId.setCustomValidity("Medical ID must be 5–20 alphanumeric characters.");
+    medicalIdErr.textContent = "Must be 5–20 letters/numbers.";
+    return false;
+  }
+
+  medicalId.setCustomValidity("");
+  medicalIdErr.textContent = "";
+  return true;
+};
+
+medicalId.addEventListener("input", validateMedicalId);
+medicalId.addEventListener("blur", validateMedicalId);
 
   // ===== State =====
   const validateState = () => {
