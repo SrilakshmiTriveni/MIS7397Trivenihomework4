@@ -1,11 +1,11 @@
 /*
-Program name: Script1.js
+Program name: Script2.js
 Author: Bolla Srilakshmi Triveni
 Date created: 10-20-2025
 Date last edited: 12-05-2025
 Version: 3.0
 Description: Validation + review for homework3.html
-             + live clock, cookies, and localStorage.
+             + live clock, cookies, and localStorage + data grid.
 */
 
 // ===== Cookie / storage constants =====
@@ -96,102 +96,35 @@ function parseMMDDYYYY(str) {
   }
 })();
 
-// ===== UI helpers: inject greeting + Remember Me so HTML doesn't change =====
+// ===== UI helpers (safe even though HTML already has greeting & remember) =====
 function ensureGreetingUI() {
   const headerCenter = document.querySelector("#top header table tr td:nth-child(2)");
   if (!headerCenter) return;
 
   if (document.getElementById("greetingText")) return;
-
-  const welcomeBox = document.createElement("div");
-  welcomeBox.id = "welcomeBox";
-  welcomeBox.style.fontSize = "0.9rem";
-
-  const greetingSpan = document.createElement("span");
-  greetingSpan.id = "greetingText";
-  greetingSpan.textContent = "Welcome new user!";
-  welcomeBox.appendChild(greetingSpan);
-
-  const notYouLabel = document.createElement("label");
-  notYouLabel.id = "notYouWrapper";
-  notYouLabel.style.display = "none";
-  notYouLabel.style.marginLeft = "8px";
-  notYouLabel.style.fontSize = "0.85rem";
-
-  const notYouCheckbox = document.createElement("input");
-  notYouCheckbox.type = "checkbox";
-  notYouCheckbox.id = "notYouCheckbox";
-  notYouCheckbox.style.marginRight = "4px";
-
-  notYouLabel.appendChild(notYouCheckbox);
-  notYouLabel.appendChild(document.createTextNode("Not "));
-  const notYouNameSpan = document.createElement("span");
-  notYouNameSpan.id = "notYouName";
-  notYouLabel.appendChild(notYouNameSpan);
-  notYouLabel.appendChild(
-    document.createTextNode("? Click here to start as a NEW USER.")
-  );
-
-  welcomeBox.appendChild(notYouLabel);
-  headerCenter.appendChild(welcomeBox);
+  // (Not used now, but left for safety.)
 }
 
 function ensureRememberCheckbox(form) {
   if (document.getElementById("rememberMe")) return;
-
-  const table = form.querySelector("table.form-table");
-  if (!table) return;
-
-  const tbody = table.tBodies[0] || table;
-  const actionsCell = tbody.querySelector("td.actions-row");
-  const actionsRow = actionsCell ? actionsCell.parentElement : null;
-
-  const row = document.createElement("tr");
-  const cellLabel = document.createElement("td");
-  const cellControl = document.createElement("td");
-  cellControl.colSpan = 5;
-
-  const label = document.createElement("label");
-  label.className = "remember-me-label";
-
-  const cb = document.createElement("input");
-  cb.type = "checkbox";
-  cb.id = "rememberMe";
-  cb.name = "rememberMe";
-  cb.checked = true;
-
-  label.appendChild(cb);
-  label.appendChild(
-    document.createTextNode(
-      " Remember me on this device for up to 48 hours (first name + non-secure form details)."
-    )
-  );
-
-  cellControl.appendChild(label);
-  row.appendChild(cellLabel);
-  row.appendChild(cellControl);
-
-  if (actionsRow && actionsRow.parentNode === tbody) {
-    tbody.insertBefore(row, actionsRow);
-  } else {
-    tbody.appendChild(row);
-  }
+  // (HTML already contains Remember Me row.)
 }
 
 // ===================== MAIN =====================
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("patientForm");
   if (!form) return;
-    // ===== Fetch API example: load US states from a separate file =====
+
+  // ===== Fetch API example: load US states from a separate file =====
   (async function loadStates() {
     const stateSelect = document.getElementById("state");
     if (!stateSelect) return;
 
     try {
-      const response = await fetch("states-data.json"); // <-- your file
+      const response = await fetch("states-data.json");
       if (!response.ok) throw new Error("HTTP " + response.status);
 
-      const states = await response.json(); // expecting [{abbr:"TX", name:"Texas"}, ...]
+      const states = await response.json(); // [{abbr:"TX", name:"Texas"}, ...]
       stateSelect.innerHTML = '<option value="">-- Select State --</option>';
 
       states.forEach(st => {
@@ -202,10 +135,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (err) {
       console.error("Error loading state list:", err);
-      // fallback: leave the old hard-coded options in place
     }
   })();
-  // Make sure greeting + Remember Me exist (added dynamically)
+
+  // Make sure greeting + Remember Me exist (safe no-ops now)
   ensureGreetingUI();
   ensureRememberCheckbox(form);
 
@@ -262,8 +195,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const reviewPane = document.getElementById("reviewPane");
   const reviewBody = document.getElementById("reviewBody");
-  const btnValidate = document.getElementById("btnValidate");
+
   const rememberMe = document.getElementById("rememberMe");
+
+  // NEW: data-grid + buttons
+  const dataGridBody = document.querySelector("#dataGrid tbody");
+  const btnGetData = document.getElementById("btnGetData");
+  const btnCheck = document.getElementById("btnCheck");
 
   // ===== Cookie + Local Storage + greeting =====
   const greetingText = document.getElementById("greetingText");
@@ -306,6 +244,57 @@ document.addEventListener("DOMContentLoaded", () => {
       data[el.name] = el.value;
     });
     return data;
+  }
+
+  // NEW: build green data grid (Datename / Type / Value)
+  function buildDataGrid() {
+    if (!dataGridBody) return;
+    dataGridBody.innerHTML = "";
+
+    const handled = new Set();
+
+    Array.from(form.elements).forEach(el => {
+      const name = el.name;
+      if (!name || handled.has(name)) return;
+
+      const type = (el.type || "").toLowerCase();
+      if (["button", "submit", "reset"].includes(type)) return;
+
+      handled.add(name);
+
+      let value = "";
+      let displayType = type || "text";
+
+      const group = form.querySelectorAll('[name="' + name + '"]');
+
+      if (group.length > 1 && (type === "radio" || type === "checkbox")) {
+        if (type === "radio") {
+          const checked = Array.from(group).find(r => r.checked);
+          value = checked ? checked.value : "";
+        } else {
+          const checkedVals = Array.from(group)
+            .filter(c => c.checked)
+            .map(c => c.value);
+          value = checkedVals.join(", ");
+        }
+      } else {
+        value = el.value;
+      }
+
+      const tr = document.createElement("tr");
+      const tdName = document.createElement("td");
+      const tdType = document.createElement("td");
+      const tdValue = document.createElement("td");
+
+      tdName.textContent = name;
+      tdType.textContent = displayType;
+      tdValue.textContent = value;
+
+      tr.appendChild(tdName);
+      tr.appendChild(tdType);
+      tr.appendChild(tdValue);
+      dataGridBody.appendChild(tr);
+    });
   }
 
   function applyFormDataObject(data) {
@@ -701,24 +690,20 @@ document.addEventListener("DOMContentLoaded", () => {
     reviewPane.hidden = false;
   }
 
-  if (btnValidate) {
-    btnValidate.addEventListener("click", (evt) => {
+  // --- Button handlers ---
+  if (btnGetData) {
+    btnGetData.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      buildDataGrid();
+    });
+  }
+
+  if (btnCheck) {
+    btnCheck.addEventListener("click", (evt) => {
       evt.preventDefault();
       if (validateForm()) {
         buildReview();
-        let realSubmit = form.querySelector("button[type='submit']");
-        if (!realSubmit) {
-          realSubmit = document.createElement("button");
-          realSubmit.type = "submit";
-          realSubmit.textContent = "SEND THE FORM";
-          realSubmit.className = "btn-submit-final";
-          const actionsRow = form.querySelector(".actions-row");
-          if (actionsRow) {
-            actionsRow.appendChild(realSubmit);
-          } else {
-            form.appendChild(realSubmit);
-          }
-        }
+        buildDataGrid();
       } else {
         if (reviewPane) reviewPane.hidden = true;
         alert("Please fix the highlighted errors before continuing.");
@@ -726,12 +711,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Submit = normal submit with validation
   form.addEventListener("submit", (evt) => {
     if (!validateForm()) {
       evt.preventDefault();
       alert("Please correct the errors before submitting.");
     } else {
       saveFormToLocalStorage();
+      buildDataGrid(); // final snapshot
     }
   });
 
@@ -749,6 +736,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateSalary();
         updatePrice();
       } catch (e) { }
+      if (dataGridBody) dataGridBody.innerHTML = "";
     }, 0);
   });
 });
