@@ -401,3 +401,24 @@ body {
   border-radius: 6px;
   background: #f9fafb;
 }
+/* === Make ALL form labels bold === */
+form label,
+.form-section-title,
+.form-header,
+.section-title {
+    font-weight: 700 !important;     /* makes labels bold */
+    color: #000;                     /* optional, darker text */
+}
+
+/* Input titles like First Name, Last Name etc. */
+label {
+    font-size: 15px;                 /* slightly larger text */
+}
+
+/* Section headings: Personal Info, Contact Info, Address... */
+h3, h2, .sectionTitle {
+    font-weight: 800 !important;
+    font-size: 18px;
+    color: #166534;
+}
+
