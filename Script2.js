@@ -182,7 +182,29 @@ function ensureRememberCheckbox(form) {
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("patientForm");
   if (!form) return;
+    // ===== Fetch API example: load US states from a separate file =====
+  (async function loadStates() {
+    const stateSelect = document.getElementById("state");
+    if (!stateSelect) return;
 
+    try {
+      const response = await fetch("states-data.json"); // <-- your file
+      if (!response.ok) throw new Error("HTTP " + response.status);
+
+      const states = await response.json(); // expecting [{abbr:"TX", name:"Texas"}, ...]
+      stateSelect.innerHTML = '<option value="">-- Select State --</option>';
+
+      states.forEach(st => {
+        const opt = document.createElement("option");
+        opt.value = st.abbr;
+        opt.textContent = st.name;
+        stateSelect.appendChild(opt);
+      });
+    } catch (err) {
+      console.error("Error loading state list:", err);
+      // fallback: leave the old hard-coded options in place
+    }
+  })();
   // Make sure greeting + Remember Me exist (added dynamically)
   ensureGreetingUI();
   ensureRememberCheckbox(form);
