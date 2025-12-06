@@ -51,7 +51,7 @@ main{ flex:1; padding:20px 0 40px 0; }
 }
 
 /* ==========================================================
-   MAKE ALL LABELS + SECTION HEADINGS BOLD
+   MAKE ALL LABELS + SECTION HEADINGS BOLD, SINGLE LINE
 ========================================================== */
 label,
 .lbl,
@@ -65,7 +65,7 @@ label,
 
 /* make the first (label) column wide enough so labels don't wrap */
 .form-table td:first-child {
-  width: 190px;               /* adjust 180–220 if you need more room */
+  width:190px;               /* tweak 180–220 if you need more room */
 }
 
 /* SECTION TABS (Personal Information, Contact, Address...) */
@@ -122,6 +122,20 @@ input:focus, select:focus, textarea:focus{
   outline:none;
 }
 
+/* error highlight */
+.input-error{
+  border-color:#d32f2f !important;
+  background-color:#ffebee;
+}
+
+.form-error{
+  color:#b00020;
+  font-size:12px;
+  margin-left:6px;
+  display:block;
+  margin-top:4px;
+}
+
 /* ==========================================================
    FIELD WIDTHS
 ========================================================== */
@@ -148,39 +162,101 @@ input[type="range"]{ width:160px; }
 /* ==========================================================
    BUTTONS
 ========================================================== */
-.btn-review,input[type="reset"],.btn-submit-final{
-  padding:7px 18px; border-radius:4px;
-  font-size:14px; font-weight:900; cursor:pointer;
+.btn-review,
+input[type="reset"],
+.btn-submit-final{
+  padding:7px 18px;
+  border-radius:4px;
+  font-size:14px;
+  font-weight:900;
+  cursor:pointer;
 }
 
 .btn-review{
-  background:rgb(231,74,100); color:#fff; border:1px solid #7d2b30;
+  background:rgb(231,74,100);
+  color:#fff;
+  border:1px solid #7d2b30;
 }
 .btn-review:hover{ background:#b33243; }
 
-input[type="reset"]{ background:#eee; border:1px solid #444; }
+input[type="reset"]{
+  background:#eee;
+  border:1px solid #444;
+}
 input[type="reset"]:hover{ background:#ddd; }
 
 .btn-submit-final{
-  background:#2e7d32; border:1px solid #1e5e22; color:#fff;
+  background:#2e7d32;
+  border:1px solid #1e5e22;
+  color:#fff;
 }
 .btn-submit-final:hover{ background:#1f5525; }
+
+/* center the action buttons row */
+.actions-row{
+  text-align:center;
+  padding-top:12px;
+}
 
 /* ==========================================================
    IFRAMES + COOKIE GREETING
 ========================================================== */
-#welcomeBox{ font-size:1rem; font-weight:600; color:#000; }
+#welcomeBox{
+  font-size:1rem;
+  font-weight:600;
+  color:#000;
+}
 
 #infoFrameSection{
-  width:92%; max-width:1000px; margin:25px auto 80px;
-  background:#fff; border-radius:10px;
-  padding:18px; border:1px solid #ccc; box-shadow:0 3px 8px #0002;
+  width:92%;
+  max-width:1000px;
+  margin:25px auto 80px;
+  background:#fff;
+  border-radius:10px;
+  padding:18px;
+  border:1px solid #ccc;
+  box-shadow:0 3px 8px #0002;
 }
 
 #healthFrame{
-  width:100%; min-height:300px;
-  border-radius:6px; background:#f9fafb;
+  width:100%;
+  min-height:300px;
+  border-radius:6px;
+  background:#f9fafb;
   border:2px solid #aaa;
+}
+
+/* ==========================================================
+   DATA GRID (professor-style)
+========================================================== */
+#dataGridSection{
+  width:100%;
+  background:#2f6b2f;
+  border-top:4px solid #e74a64;
+  padding:8px 0 16px 0;
+  margin-top:16px;
+}
+
+#dataGrid{
+  width:92%;
+  max-width:1000px;
+  margin:0 auto;
+  border-collapse:collapse;
+  background:#e3f3df;
+  border:3px solid #1e4d1e;
+}
+
+#dataGrid th,
+#dataGrid td{
+  border:1px solid #1e4d1e;
+  padding:4px 6px;
+  font-size:13px;
+}
+
+#dataGrid th{
+  background:#1e4d1e;
+  color:#fff;
+  text-align:left;
 }
 
 /* ==========================================================
@@ -189,6 +265,34 @@ input[type="reset"]:hover{ background:#ddd; }
 #page-footer{ bottom:0; position:fixed; }
 footer{
   background:rgb(183,214,183);
-  padding:10px; border-top:1px solid #0005;
-  font-size:12px; font-weight:bold;
+  padding:10px;
+  border-top:1px solid #0005;
+  font-size:12px;
+  font-weight:bold;
 }
+
+.footer-inner{
+  width:92%;
+  max-width:1024px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.footer-brand{ font-weight:bold; margin-right:6px; }
+.footer-sep{ margin:0 4px; }
+.footer-btn{
+  padding:4px 10px;
+  background:#d4545e;
+  color:#fff;
+  text-decoration:none;
+  border-radius:4px;
+  font-size:11px;
+}
+.footer-btn:hover{ background:#b33243; }
+.footer-link{
+  color:#0645ad;
+  text-decoration:none;
+  font-size:11px;
+}
+.footer-link:hover{ text-decoration:underline; }
+.footer-address{ margin-left:6px; }
