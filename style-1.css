@@ -1,77 +1,79 @@
-body{
-    margin:0;background:#c9d9c0;font-family:Arial;
+/* ===== Header & footer protection (content stays in view) ===== */
+#top {
+  position: sticky;        /* header stays at top when scrolling */
+  top: 0;
+  z-index: 1000;
 }
 
-/* HEADER */
-#header-bar{
-    background:#b85d60;color:white;
-    padding:15px;text-align:center;
-    position:fixed;width:100%;top:0;
-    font-size:20px;z-index:1000;
-}
-#logo{position:absolute;left:20px;height:50px;}
-#welcomeUser{position:absolute;right:200px;font-size:15px;font-weight:bold;}
-#datetime{position:absolute;right:15px;font-size:14px;}
-
-/* CONTAINER */
-.page-container{
-    width:75%;margin:150px auto 120px auto;
-    background:#f5fff3;padding:30px 45px;
-    border-radius:11px;border:1px solid #d2e0cd;
+#page-footer {
+  position: fixed;         /* footer always visible at bottom */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 900;
 }
 
-/* TITLE */
-.form-title{
-    background:#b85d60;color:white;
-    padding:10px;border-radius:6px;
-    text-align:center;font-size:20px;
-    width:70%;margin:0 auto 25px;
+/* Give space so footer does not cover content */
+body {
+  padding-bottom: 80px;
 }
 
-/* SECTIONS */
-.section{margin-bottom:30px;}
-.section h3{
-    background:#b85d60;color:white;
-    padding:6px 14px;border-radius:6px;
-    font-size:16px;margin-bottom:15px;
+/* Greeting / cookie UI */
+#welcomeBox {
+  margin-top: 4px;
+  font-size: 0.95rem;
+  color: #111;
 }
 
-/* ONE FIELD PER LINE */
-label{
-    display:block;width:100%;
-    margin:10px 0;font-size:15px;
+#welcomeBox #greetingText {
+  font-weight: 600;
 }
 
-/* INPUTS */
-input,select,textarea{
-    width:60%;max-width:350px;
-    padding:8px;border-radius:5px;
-    border:1px solid #b8b8b8;font-size:15px;
-}
-textarea{height:60px;}
-
-/* BUTTON */
-#submitBtn{
-    background:#b85d60;color:white;
-    padding:12px 30px;border:none;
-    border-radius:6px;font-size:18px;
-    display:block;margin:25px auto;
+.not-you {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.85rem;
+  color: #222;
 }
 
-/* TIPS */
-#tips-box{margin-top:25px;}
-#tipsList li{margin:8px 0;font-size:15px;}
-
-/* IFRAME */
-#iframeBlock iframe{
-    width:100%;height:330px;
-    border:3px solid #b85d60;
-    border-radius:10px;
+.not-you input[type="checkbox"] {
+  margin-right: 4px;
 }
 
-/* FOOTER */
-#footer-bar{
-    background:#b85d60;color:white;
-    text-align:center;padding:12px;
-    position:fixed;bottom:0;width:100%;
+/* Remember me checkbox styling */
+.remember-me-label {
+  font-size: 0.9rem;
+  color: #222;
+}
+
+/* ===== iFrame section ===== */
+#infoFrameSection {
+  width: 92%;
+  max-width: 1000px;
+  margin: 24px auto 40px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 16px 18px 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+#infoFrameSection h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #166534;
+}
+
+#infoFrameSection p {
+  font-size: 0.9rem;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+#healthFrame {
+  width: 100%;
+  min-height: 280px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f9fafb;
 }
