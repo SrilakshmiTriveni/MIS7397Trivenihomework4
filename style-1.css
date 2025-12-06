@@ -95,21 +95,12 @@ main {
   width: 60px;
   text-align: center;
 }
-
-/* extra spacing + label width so the first name is centered nicely */
-.row-names td {
-  padding: 5px 10px;
-}
-
-.row-names label {
-  width: 150px;
-  display: inline-block;
-  text-align: right;
-  margin-right: 8px;
-}
-/* push First Name group slightly right */
-.row-names td:first-child {
-  padding-left: 80px;   /* tweak this value if needed */
+/* Put First / Middle / Last on the same line cleanly */
+.row-names {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns */
+    gap: 25px;  /* adjust spacing if needed */
+    width: 100%;
 }
 /* Section titles */
 .section-tab {
