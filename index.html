@@ -3,9 +3,9 @@
 Program name: homework3.html
 Author: Bolla Srilakshmi Triveni
 Date created: 10-20-2025
-Date last edited: 12-05-2025
-Version: 3.0
-Description: Registration form for a clinic patient portal (Homework 3) 
+Date last edited: 12-06-2025
+Version: 3.1
+Description: Registration form for a clinic patient portal (Homework 3).
              + Fetch API + iFrame + cookies + localStorage + time-based event.
 -->
 <html lang="en">
@@ -22,6 +22,7 @@ Description: Registration form for a clinic patient portal (Homework 3)
     <header>
       <table>
         <tr>
+          <!-- Left: logo -->
           <td valign="top" align="left" width="20%">
             <div class="image">
               <img id="logo" src="cliniclogo.png" alt="SouthCentral Clinic logo" />
@@ -31,6 +32,7 @@ Description: Registration form for a clinic patient portal (Homework 3)
           <!-- Center: title + greeting / cookie UI -->
           <td align="center">
             <h2>SouthCentral Clinic</h2>
+
             <div id="welcomeBox">
               <span id="greetingText">Welcome new user!</span>
               <label id="notYouWrapper" class="not-you" style="display:none;">
@@ -159,7 +161,7 @@ Description: Registration form for a clinic patient portal (Homework 3)
             <input type="password" id="medicalId" name="medicalId" required
                    placeholder="Enter your medical ID"
                    title="Medical identification number (5–20 letters or numbers)"
-                   pattern="^[A-Za-z0-9]{5,20}$" maxlength="20"/>
+                   pattern="^[A-Za-z0-9]{5,20}$" maxlength="20" />
             <span class="form-error" id="medicalIdErr"></span>
           </td>
         </tr>
@@ -202,7 +204,7 @@ Description: Registration form for a clinic patient portal (Homework 3)
           <td class="field-tight">
             <select id="state" name="state" required title="Select your state (2-letter code saved).">
               <option value="">-- Select State --</option>
-              <!-- options loaded by Fetch API in states.js -->
+              <!-- options loaded by Fetch API in states1.js -->
             </select>
             <span class="form-error" id="stateErr"></span>
           </td>
@@ -218,7 +220,7 @@ Description: Registration form for a clinic patient portal (Homework 3)
         </tr>
 
         <!-- ===== Travel & Move-In Information ===== -->
-        <tr><td colspan="6"><div class="section-tab">Travel & Move-in Information</div></td></tr>
+        <tr><td colspan="6"><div class="section-tab">Travel &amp; Move-in Information</div></td></tr>
         <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
         <tr>
@@ -417,7 +419,7 @@ Description: Registration form for a clinic patient portal (Homework 3)
           </td>
         </tr>
 
-        <!-- Buttons (matches professor style) -->
+        <!-- Buttons -->
         <tr>
           <td colspan="6" class="actions-row">
             <button type="button" id="btnGetData" class="btn-review">Get Data V1</button>
@@ -493,7 +495,7 @@ Description: Registration form for a clinic patient portal (Homework 3)
   </footer>
 
   <!-- External JS -->
-  <script src="states1.js"></script>
-  <script src="Script2.js"></script>
+  <script src="states1.js"></script>  <!-- your Fetch API for states -->
+  <script src="Script2.js"></script>  <!-- main JS with cookies/localStorage/time event -->
 </body>
 </html>
