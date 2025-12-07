@@ -1,44 +1,48 @@
 <!DOCTYPE html>
 <!-- 
-Program name: homework4.html
+Program name: homework3.html
 Author: Bolla Srilakshmi Triveni
 Date created: 10-20-2025
-Date last edited: 11-??-2025
-Version: 3.0
-Description: Registration form for a clinic patient portal with
-- JS validation
-- Fetch API
-- iFrame
-- Content protection (sticky header + fixed footer)
-- Cookies + Local Storage
-- Time-based event (live clock)
+Date last edited: 12-06-2025
+Version: 3.1
+Description: Registration form for a clinic patient portal (Homework 3).
+             + Fetch API + iFrame + cookies + localStorage + time-based event.
 -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SouthCentral Clinic</title>
-  <link rel="stylesheet" href="style-2.css" />
+  <link rel="stylesheet" href="style-1.css" />
 </head>
 
 <body>
-  <!-- ========= TOP (Header) ========= -->
+  <!-- ========= TOP (Header – protected) ========= -->
   <div id="top">
     <header>
       <table>
         <tr>
+          <!-- Left: logo -->
           <td valign="top" align="left" width="20%">
             <div class="image">
               <img id="logo" src="cliniclogo.png" alt="SouthCentral Clinic logo" />
             </div>
           </td>
+
+          <!-- Center: title + greeting / cookie UI -->
           <td align="center">
             <h2>SouthCentral Clinic</h2>
-            <!-- Greeting based on cookie -->
-            <div id="welcomeMsg" class="welcome-msg"></div>
-            <!-- Dynamic "Not Jake? Start as a new user" area -->
-            <div id="existingUserBox"></div>
+
+            <div id="welcomeBox">
+              <span id="greetingText">Welcome new user!</span>
+              <label id="notYouWrapper" class="not-you" style="display:none;">
+                <input type="checkbox" id="notYouCheckbox" />
+                Not <span id="notYouName"></span>? Click here to start as a NEW USER.
+              </label>
+            </div>
           </td>
+
+          <!-- Right: live date / time -->
           <td valign="top" align="right" width="20%">
             <div id="todayBox">
               <span id="todayLine1"></span><br />
@@ -69,15 +73,11 @@ Description: Registration form for a clinic patient portal with
                    title="1–30 chars; letters, apostrophes, and dashes only."
                    pattern="^[A-Za-z'\-]{1,30}$" />
             <span class="form-error" id="fnameErr"></span>
-
-            <!-- Remember Me checkbox -->
-            <div class="remember-container">
-              <input type="checkbox" id="rememberMe" checked />
-              <label for="rememberMe">Remember me on this device</label>
-            </div>
           </td>
 
-          <td class="lbl"><label for="mi">Middle Initial:</label></td>
+          <td class="lbl">
+            <label for="mi">Middle Initial:</label>
+          </td>
           <td class="field field-mi">
             <input type="text" id="mi" name="mi" maxlength="1"
                    aria-label="Middle Initial"
@@ -86,7 +86,9 @@ Description: Registration form for a clinic patient portal with
             <span class="form-error" id="miErr"></span>
           </td>
 
-          <td class="lbl"><label for="lname"><span class="req">*</span> Last Name:</label></td>
+          <td class="lbl">
+            <label for="lname"><span class="req">*</span> Last Name:</label>
+          </td>
           <td class="field">
             <input type="text" id="lname" name="lname" maxlength="30" required
                    placeholder="please enter your last name"
@@ -103,9 +105,7 @@ Description: Registration form for a clinic patient portal with
             <input type="text" id="dob" name="dob" required
                    placeholder="MM/DD/YYYY"
                    title="Birthday cannot be in the future or 120+ years ago. Format: MM/DD/YYYY"
-                   pattern="^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/((19|20)\d{2})$"
-                   data-min="01/01/1900"
-                   data-max="12/31/2100" />
+                   pattern="^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/((19|20)\d{2})$" />
             <span class="form-error" id="dobErr"></span>
           </td>
         </tr>
@@ -142,7 +142,7 @@ Description: Registration form for a clinic patient portal with
 
         <tr>
           <td><label for="phone"><span class="req">*</span> Phone Number:</label></td>
-          <td colspan="5">
+          <td colspan="12">
             <input type="text" id="phone" name="phone" required
                    pattern="^[0-9]{3}-[0-9]{3}-[0-9]{4}$"
                    title="Phone must be in format 000-000-0000 (10 digits with dashes)"
@@ -152,12 +152,16 @@ Description: Registration form for a clinic patient portal with
         </tr>
 
         <tr>
-          <td><label for="medicalId" title="Required medical ID number."><span class="req">*</span> Medical ID Number:</label></td>
+          <td>
+            <label for="medicalId" title="Required medical ID number.">
+              <span class="req">*</span> Medical ID Number:
+            </label>
+          </td>
           <td colspan="5">
             <input type="password" id="medicalId" name="medicalId" required
                    placeholder="Enter your medical ID"
                    title="Medical identification number (5–20 letters or numbers)"
-                   pattern="^[A-Za-z0-9]{5,20}$" />
+                   pattern="^[A-Za-z0-9]{5,20}$" maxlength="20" />
             <span class="form-error" id="medicalIdErr"></span>
           </td>
         </tr>
@@ -200,7 +204,7 @@ Description: Registration form for a clinic patient portal with
           <td class="field-tight">
             <select id="state" name="state" required title="Select your state (2-letter code saved).">
               <option value="">-- Select State --</option>
-              <!-- Populated by states.js -->
+              <!-- options loaded by Fetch API in states1.js -->
             </select>
             <span class="form-error" id="stateErr"></span>
           </td>
@@ -216,7 +220,7 @@ Description: Registration form for a clinic patient portal with
         </tr>
 
         <!-- ===== Travel & Move-In Information ===== -->
-        <tr><td colspan="6"><div class="section-tab">Travel & Move-in Information</div></td></tr>
+        <tr><td colspan="6"><div class="section-tab">Travel &amp; Move-in Information</div></td></tr>
         <tr><td colspan="6"><div class="section-line"></div></td></tr>
 
         <tr>
@@ -225,9 +229,7 @@ Description: Registration form for a clinic patient portal with
             <input type="text" id="travelDate" name="travelDate" required
                    placeholder="MM/DD/YYYY"
                    title="Travel date must be after today. Format: MM/DD/YYYY"
-                   pattern="^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/((19|20)\d{2})$"
-                   data-min="01/01/2020"
-                   data-max="12/31/2100" />
+                   pattern="^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/((19|20)\d{2})$" />
             <span class="form-error" id="travelDateErr"></span>
           </td>
         </tr>
@@ -238,9 +240,7 @@ Description: Registration form for a clinic patient portal with
             <input type="text" id="moveInDate" name="moveInDate" required
                    placeholder="MM/DD/YYYY"
                    title="Move-in date must be after today. Format: MM/DD/YYYY"
-                   pattern="^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/((19|20)\d{2})$"
-                   data-min="01/01/2020"
-                   data-max="12/31/2100" />
+                   pattern="^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/((19|20)\d{2})$" />
             <span class="form-error" id="moveInDateErr"></span>
           </td>
         </tr>
@@ -286,13 +286,13 @@ Description: Registration form for a clinic patient portal with
         <tr>
           <td><label>Have you been vaccinated?</label></td>
           <td>
-            <input type="radio" id="vaccYes" name="vaccinated" value="Yes" required title="Select Yes if vaccinated.">
+            <input type="radio" id="vaccYes" name="vaccinated" value="Yes" required>
             <label for="vaccYes">Yes</label>
 
-            <input type="radio" id="vaccNo" name="vaccinated" value="No" title="Select No if not vaccinated.">
+            <input type="radio" id="vaccNo" name="vaccinated" value="No">
             <label for="vaccNo">No</label>
 
-            <input type="radio" id="vaccUnsure" name="vaccinated" value="Unsure" title="Select Unsure if not certain.">
+            <input type="radio" id="vaccUnsure" name="vaccinated" value="Unsure">
             <label for="vaccUnsure">Unsure</label>
           </td>
         </tr>
@@ -320,7 +320,11 @@ Description: Registration form for a clinic patient portal with
         </tr>
 
         <tr>
-          <td class="td-right"><label for="priceMin" title="Price range you would pay for a home.">Home price range:</label></td>
+          <td class="td-right">
+            <label for="priceMin" title="Price range you would pay for a home.">
+              Home price range:
+            </label>
+          </td>
           <td colspan="5" class="price-range-row">
             <div class="range-group">
               <span class="tiny">Min</span>
@@ -361,7 +365,8 @@ Description: Registration form for a clinic patient portal with
         </tr>
 
         <tr>
-          <td><label for="otherNotes" title="Optional; avoid double quotes (&quot;).">Other notes (optional):</label></td>
+          <td><label for="otherNotes" title="Optional; avoid double quotes (&quot;).">
+            Other notes (optional):</label></td>
           <td colspan="5">
             <textarea id="otherNotes" name="otherNotes" rows="3" cols="50"
                       title="Optional; avoid double quotes (&quot;)."
@@ -390,59 +395,93 @@ Description: Registration form for a clinic patient portal with
             <input type="password" id="pw" name="pw" required
                    placeholder="Enter password"
                    title="8–30 chars; include upper, lower, digit, special (!@#%^&*()_+=-/><.,~`); no double quotes; cannot contain your user id, first, or last name."
-                   pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()_+=\-\/><.,~`])[A-Za-z\d!@#%^&*()_+=\-\/><.,~`]{8,30}$"/>
+                   pattern="^(?=.*[A-Z])(?=.*[A-z])(?=.*\d)(?=.*[!@#%^&*()_+=\-\/><.,~`])[A-Za-z\d!@#%^&*()_+=\-\/><.,~`]{8,30}$"/>
           </td>
           <td><label for="pw2" class="padR"><span class="req">*</span> Re-enter Password:</label></td>
           <td>
             <input type="password" id="pw2" name="pw2" required
                    placeholder="Re-enter password"
                    title="Must match the first password exactly."
-                   pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()_+=\-\/><.,~`])[A-Za-z\d!@#%^&*()_+=\-\/><.,~`]{8,30}$"/>
+                   pattern="^(?=.*[A-Z])(?=.*[A-z])(?=.*\d)(?=.*[!@#%^&*()_+=\-\/><.,~`])[A-Za-z\d!@#%^&*()_+=\-\/><.,~`]{8,30}$"/>
             <span class="form-error" id="pwErr"></span>
           </td>
           <td colspan="2"></td>
         </tr>
 
+        <!-- Remember me (cookie + localStorage control) -->
+        <tr>
+          <td></td>
+          <td colspan="5">
+            <label class="remember-me-label">
+              <input type="checkbox" id="rememberMe" name="rememberMe" checked />
+              Remember me on this device for up to 48 hours (first name + non-secure form details).
+            </label>
+          </td>
+        </tr>
+
         <!-- Buttons -->
         <tr>
           <td colspan="6" class="actions-row">
-            <input type="reset" value="CLEAR AND START OVER" />
-            <button type="button" id="btnValidate" class="btn-review">VALIDATE</button>
-            <!-- Real SUBMIT button is triggered only when there are NO errors -->
+            <button type="button" id="btnGetData" class="btn-review">Get Data V1</button>
+            <button type="button" id="btnCheck" class="btn-review">Check your input</button>
+            <button type="submit" id="btnSend" class="btn-submit-final">Send the Form</button>
+            <input type="reset" value="Clear and Start over" />
           </td>
         </tr>
       </table>
 
-      <!-- Extra Content: Fetch + iFrame -->
-      <section id="extraContent">
-        <h3>Health Tips (loaded with Fetch API)</h3>
-        <div id="healthTips" class="tips-box">
-          <!-- This content will be loaded from health-tips.html using Fetch -->
-          Loading health tips...
-        </div>
-
-        <h3>Helpful External Resource (iFrame example)</h3>
-        <div class="iframe-wrapper">
-          <iframe
-            id="eduFrame"
-            src="https://www.w3schools.com/html/default.asp"
-            title="HTML Tutorial (external resource)"
-            width="100%"
-            height="250"
-            style="border:1px solid #ccc;border-radius:8px;"
-          >
-          </iframe>
-        </div>
-      </section>
-
-      <!-- Right-side review pane (same page) -->
-      <div id="reviewPane" role="region" aria-live="polite" aria-labelledby="reviewTitle" hidden>
+      <!-- Right-side review pane -->
+      <div id="reviewPane" role="region" aria-live="polite"
+           aria-labelledby="reviewTitle" hidden>
         <h3 id="reviewTitle">PLEASE REVIEW THIS INFORMATION</h3>
         <div id="reviewBody" class="review-body"></div>
       </div>
     </form>
+
+    <!-- ===== Data grid: Datename / Type / Value ===== -->
+    <section id="dataGridSection" aria-label="Form data grid">
+      <table id="dataGrid">
+        <thead>
+          <tr>
+            <th>Datename</th>
+            <th>Type</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- rows filled by JavaScript -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===== iFrame section (BODY) ===== -->
+    <section id="infoFrameSection" aria-label="Helpful resources">
+      <h3>Learn more (iFrame demo)</h3>
+      <p>
+        Health Tips:
+        Drink 6–8 glasses of water daily.
+        Get 7–9 hours of sleep every night.
+        Exercise 30 minutes at least 3 days a week.
+        Limit sugar to boost immunity.
+        Regular medical checkups recommended.
+        Eat more fruits and vegetables.
+        Maintain mental wellness and reduce stress.
+        Please click and watch the video below for more health tips.
+      </p>
+
+      <iframe id="healthFrame"
+        width="100%"
+        height="420"
+        src="https://www.youtube.com/embed/D8A176VqHnQ"
+        title="YouTube Video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </section>
   </main>
 
+  <!-- ===== Fixed footer (protected) ===== -->
   <footer id="page-footer">
     <div class="footer-inner">
       <span class="footer-brand">SouthCentral Clinic</span>
@@ -456,7 +495,7 @@ Description: Registration form for a clinic patient portal with
   </footer>
 
   <!-- External JS -->
-  <script src="states1.js"></script>
-  <script src="Script2.js"></script>
+  <script src="states1.js"></script>  <!-- your Fetch API for states -->
+  <script src="Script2.js"></script>  <!-- main JS with cookies/localStorage/time event -->
 </body>
 </html>
