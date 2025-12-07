@@ -1,11 +1,4 @@
-/*
-Program: states-data.json
-Author: Bolla Srilakshmi Triveni
-Date last edited: 12-06-2025
-Version: 3.1
-Description: Validation, review, data grid, time-based event,
-             cookie behavior, and localStorage for homework3.html.
-*/
+
 [
   { "code": "AL", "name": "Alabama" },
   { "code": "AK", "name": "Alaska" },
